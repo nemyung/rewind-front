@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Post = (props) => {
+  /* eslint-disable */
   const { title, contents, insertDt, nickname, commentCnt } = props;
+
   console.log(props);
   return (
     <>
@@ -20,7 +22,7 @@ const Post = (props) => {
   );
 };
 
-Post.defauleProps = {
+Post.defaultProps = {
   title: '님들 이거 맞춰 보세용',
   author: 'aaa@aaa.com',
   contents: '저희 조는 왜 4명 일까요?',

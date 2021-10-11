@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Post from '../components/Post';
+
 const PostsList = () => {
   return (
     <>
-      <div>포스트 집</div>
+      <Post />
     </>
   );
 };
