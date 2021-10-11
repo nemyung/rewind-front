@@ -18,6 +18,7 @@ const initialState = {
 
 export default function postsReducer(state = initialState, action) {
   return produce(state, (draft) => {
+    console.log(draft);
     switch (action.type) {
       default:
         break;

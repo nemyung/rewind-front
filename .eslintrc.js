@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     browser: true,
+    node: true,
     es2021: true,
   },
   extends: [
@@ -23,12 +24,12 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
     ],
-    // prettier/prettier 에러시 해결
     'prettier/prettier': [
       'error',
       {
         endOfLine: 'auto',
       },
     ],
+    'no-console': 'off',
   },
 };
