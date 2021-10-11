@@ -23,5 +23,12 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
     ],
+    // prettier/prettier 에러시 해결
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 };
