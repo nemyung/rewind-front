@@ -13,8 +13,9 @@ const PostEdit = (props) => {
 
 
 
-  const createPost = () => {
+  const editPost = () => {
     console.log(contents);
+    // postid, contents
     dispatch(updatePostToAxios({ id: '', title, contents }));
   };
 
