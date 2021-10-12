@@ -1,10 +1,11 @@
 import React from 'react';
+import isEqaul from 'lodash/isEqual';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
+/* eslint-disable */
 
 const Post = (props) => {
-  /* eslint-disable */
-  const { title, contents, insertDt, nickname, commentCnt } = props;
+  const postList = useSelector((state) => state.posts, isEqaul);
 
   console.log(props);
   return (
