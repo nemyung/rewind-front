@@ -1,3 +1,3 @@
-import { theme, media } from './theme';
+import { theme, media, GlobalStyle } from './theme';
 
-export { theme, media };
+export { theme, media, GlobalStyle };
