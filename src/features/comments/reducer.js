@@ -12,7 +12,8 @@ const initialState = {
     postId: <Number>,
     email: userEmail<String>,
     nickname: userNickname<String>,
-    insertDt: ISOString<String>
+    insertDt: ISOString<String>,
+    comment: comment<String>
   };
 */
 

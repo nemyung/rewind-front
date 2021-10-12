@@ -1,4 +1,6 @@
 import React from 'react';
+import CommentForm from './CommentForm';
+import CommentList from './CommentList';
 
 const Post = (props) => {
   /* eslint-disable */
@@ -17,6 +19,8 @@ const Post = (props) => {
       </div>
       <div>
         <p>댓글 {commentCnt}개</p>
+        <CommentForm />
+        <CommentList />
       </div>
     </>
   );
