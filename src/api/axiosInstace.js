@@ -16,7 +16,8 @@ export default {
   // 게시물 불러오기
   getPost: () => instance.get('/posts'),
   // 게시물 작성하기
-  createPost: (contents) => instance.post('/posts', contents),
+  createPost: (post) => instance.post('/posts', post),
+
   // 게시물 수정하기
   editPost: (id, content) => instance.put(`/posts/${id}`, content),
   // 게시물 삭제하기
