@@ -21,7 +21,7 @@ export const validateInput = (email, password, passwordAgain) => {
     return '비밀번호는 6자 이상 20자 이하로 설정해주세요.';
   }
 
-  if (!(password === passwordAgain)) {
+  if (passwordAgain && !(password === passwordAgain)) {
     return '입력하신 비밀번호가 서로 다릅니다.';
   }
 
