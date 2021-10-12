@@ -11,7 +11,8 @@ export default function userReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOGIN: {
-        console.log(draft);
+        draft.email = action.payload.email;
+        draft.nickname = action.payload.nickname;
         break;
       }
       case LOG_OUT: {

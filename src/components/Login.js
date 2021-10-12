@@ -1,29 +1,54 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import Button from '@mui/material/Button';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import LoginIcon from '@mui/icons-material/Login';
-import DirectionsBoatFilledIcon from '@mui/icons-material/DirectionsBoatFilled';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PasswordIcon from '@mui/icons-material/Password';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import DirectionsBoatFilledIcon from '@mui/icons-material/DirectionsBoatFilled';
+
+import { validateInput } from '../utils';
+import { loginToServer } from '../features/user/actions';
 
 const Login = ({ toggle = noop }) => {
   const [email, setEmail] = React.useState('');
   const [pw, setPw] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     console.log('hi');
     console.log(email, pw);
+
+    const invalidationMessage = validateInput(email, pw);
+    if (validateInput(email, pw)) {
+      console.log('----------validation실패----------');
+      console.log(invalidationMessage); // TODOS 오류메세지 뿌리기
+      console.log('---------------------------------');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await dispatch(loginToServer(email, pw));
+      setIsLoading(false);
+      history.replace('/');
+    } catch (error) {
+      console.log('axios 실패 대비...');
+      console.error(error);
+    }
   };
 
   return (
