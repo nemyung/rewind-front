@@ -28,6 +28,6 @@ export const validateInput = (email, password, passwordAgain) => {
   return null;
 };
 
-export const isAlltrue = (...args) => {
+export const isAllTrue = (...args) => {
   return args.every(Boolean);
 };
