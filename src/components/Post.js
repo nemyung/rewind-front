@@ -1,39 +1,41 @@
 import React from 'react';
-import isEqaul from 'lodash/isEqual';
-import CommentForm from './CommentForm';
-import CommentList from './CommentList';
+import { useSelector } from 'react-redux';
+
 /* eslint-disable */
 
 const Post = (props) => {
-  const postList = useSelector((state) => state.posts, isEqaul);
+  // const toDay = isPost?.insertDt.split('T')[0];
+  const userInfo = useSelector((state) => state.user.email);
 
-  console.log(props);
+  const isMe = userInfo === isPost.email;
+
+  console.log(isMe);
+
+  console.log(isPost);
   return (
     <>
       <div style={{ display: 'flex' }}>
-        <p>{title}</p>
-        <p>{nickname}</p>
-        <p>{insertDt}</p>
+        <p>{isPost?.title}</p>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <p>{isPost?.nickname}</p>
+        <p>{isPost?.insertDt}</p>
+        {isMe && <button type="button">수정</button>}
       </div>
       <div>
-        <p>{contents}</p>
+        <p>{isPost?.contents}</p>
       </div>
       <div>
-        <p>댓글 {commentCnt}개</p>
-        <CommentForm />
-        <CommentList />
+        <p>댓글 {isPost?.commentCnt}개</p>
       </div>
     </>
   );
-};
-
-Post.defaultProps = {
-  title: '님들 이거 맞춰 보세용',
-  author: 'aaa@aaa.com',
-  contents: '저희 조는 왜 4명 일까요?',
-  insertDt: '2021-10-12',
-  nickname: '우석쿤',
-  commentCnt: 0,
 };
 
 export default Post;

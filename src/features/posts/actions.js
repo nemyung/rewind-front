@@ -44,5 +44,6 @@ export const createPostToAxios = (post) => async (dispatch) => {
 /* eslint-disable */
 export const updatePostToAxios = (postId, newPost) => async (dispatch) => {
   const editPost = await axiosInstace.editPost(postId, newPost);
+  dispatch(updatePost(editPost))
   console.log(editPost);
 };

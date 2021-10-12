@@ -5,9 +5,9 @@ import { history } from '../features/configureStore';
 
 const PostTitle = ({ id = '', idx = '' }) => {
   const title = useSelector((state) => state.posts.byId);
-  const toDay = title[id].insertDt.split('T')[0];
+  // const toDay = title[id].insertDt.split('T')[0];
 
-  const movePostDetail = () => {
+  const moveToPostDetail = () => {
     history.push(`/detail/${id}`);
   };
 
@@ -25,14 +25,14 @@ const PostTitle = ({ id = '', idx = '' }) => {
         </div>
         {/* eslint-disable */}
         {/* 솔직히 온클릭 잡는건 과하다 생각합니다. */}
-        <div onClick = {movePostDetail}>
+        <div onClick = {moveToPostDetail}>
           <p>{title[id].title}</p>
         </div>
         <div>
           <p>{title[id].nickname}</p>
         </div>
         <div>
-          <p>{toDay}</p>
+          <p>{title[id].insertDt}</p>
         </div>
       </div>
     </>

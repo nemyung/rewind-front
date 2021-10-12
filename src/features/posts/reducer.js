@@ -34,6 +34,9 @@ export default function postsReducer(state = initialState, action) {
       case CREATE: {
         console.log('CREATE');
         console.log(action.payload);
+        const { id } = action.payload;
+        draft.byId[id] = action.payload;
+        draft.allIds.unshift(id);
         break;
       }
       case UPDATE: {

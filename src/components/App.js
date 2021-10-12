@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Header from './Header/Header';
 import Sign from '../pages/Sign';
 import PostsList from '../pages/PostsList';
 import PostWrite from '../pages/PostWrite';
