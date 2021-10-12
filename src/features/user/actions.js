@@ -1,20 +1,10 @@
-import { SIGN_UP, LOGIN } from './types';
-
-const signup = (payload) => ({
-  type: SIGN_UP,
-  payload,
-});
+/* eslint-disable no-unused-vars */
+import axios from 'axios';
+import { LOGIN } from './types';
 
 const login = (payload) => ({
   type: LOGIN,
   payload,
 });
-
-export const signupToServer =
-  (email, pw, pwCheck, nickname) => async (dispatch) => {
-    // validationLogic
-
-    dispatch({ email, nickname });
-  };
 
 export const checkAuthToServer = (token) => async (dispatch) => {};
