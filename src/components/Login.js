@@ -14,14 +14,12 @@ import DirectionsBoatFilledIcon from '@mui/icons-material/DirectionsBoatFilled';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PasswordIcon from '@mui/icons-material/Password';
 
-// import Grid from '@mui/material/Grid';
-
 const Login = ({ toggle = noop }) => {
   const [email, setEmail] = React.useState('');
   const [pw, setPw] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     console.log('hi');

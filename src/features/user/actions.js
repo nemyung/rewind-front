@@ -1,12 +1,20 @@
-import { SIGN_UP } from './types';
+import { SIGN_UP, LOGIN } from './types';
 
 const signup = (payload) => ({
   type: SIGN_UP,
   payload,
 });
 
-const signupToServer = (email, pw, pwCheck, nickname) => async (dispatch) => {
-  // validationLogic
+const login = (payload) => ({
+  type: LOGIN,
+  payload,
+});
 
-  dispatch({ email, nickname });
-};
+export const signupToServer =
+  (email, pw, pwCheck, nickname) => async (dispatch) => {
+    // validationLogic
+
+    dispatch({ email, nickname });
+  };
+
+export const checkAuthToServer = (token) => async (dispatch) => {};
