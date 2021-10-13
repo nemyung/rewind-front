@@ -1,43 +1,30 @@
 /* eslint-disable no-alert */
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { history } from '../features/configureStore';
-import { createPostToAxios } from '../features/posts/actions';
+import T from '../api/tokenInstance';
 
 const PostWrite = () => {
-  const dispatch = useDispatch();
-
   const [title, setTitle] = React.useState('');
   const [contents, setContents] = React.useState('');
   const [category, setCategory] = React.useState('React');
 
-  // const createPost = async () => {
-  //   const { data = {} } = await T.POST('/posts/new', {
-  //     title,
-  //     contents,
-  //     category,
-  //   });
+  const createPost = async () => {
+    const { data } = await T.POST('/posts/new', {
+      title,
+      contents,
+      category,
+    });
 
-  //   if (data.result === 'fail') {
-  //     alert('오류 발생!');
-  //   } else {
-  //     dispatch(create)
-  //     history.replace('/');
-  //   }
-  // };
-  // console.log(category);
-
-  const createPost = () => {
-    dispatch(
-      createPostToAxios({
-        title,
-        contents,
-        category,
-      }),
-    );
-    history.replace('/');
+    if (data.result === 'fail') {
+      alert('오류 발생!');
+    } else {
+      history.replace('/');
+    }
   };
-  const handleRadioChange = (event) => setCategory(event.target.value);
+
+  const handleRadioChange = (event) => {
+    setCategory(event.target.value);
+  };
 
   return (
     <>
@@ -46,24 +33,25 @@ const PostWrite = () => {
           제목
           <input
             id="postTitle"
+            value={title}
             type="text"
             onChange={(e) => {
               setTitle(e.target.value);
             }}
           />
         </label>
+        <label htmlFor="category">
+          <input
+            id="react"
+            name="react"
+            value="react"
+            type="radio"
+            checked={category === 'react'}
+            onChange={handleRadioChange}
+          />
+          React
+        </label>
         <div>
-          <label htmlFor="category">
-            <input
-              id="React"
-              name="React"
-              value="React"
-              type="radio"
-              checked={category === 'React'}
-              onChange={handleRadioChange}
-            />
-            React
-          </label>
           <label htmlFor="category">
             <input
               id="NodeJS"
@@ -93,6 +81,7 @@ const PostWrite = () => {
           게시글 내용
           <textarea
             id="postDesc"
+            value={contents}
             placeholder="게시글 입력"
             type="text"
             onChange={(e) => {

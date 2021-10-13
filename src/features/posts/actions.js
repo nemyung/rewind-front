@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
-import { LOAD, CREATE, DELETE, UPDATE } from './types';
+import { LOAD, CREATE, DELETE, UPDATE, ADD_COMMENT } from './types';
 import axiosInstace from '../../api/axiosInstace';
 import T from '../../api/tokenInstance';
 
@@ -23,6 +23,11 @@ export const updatePost = (postId, updatedData) => ({
 export const deletePost = (postId) => ({
   type: DELETE,
   payload: postId,
+});
+
+export const addCommentToPost = (postId, addedCommnet) => ({
+  type: ADD_COMMENT,
+  payload: { postId, addedCommnet },
 });
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
@@ -87,3 +92,5 @@ export const deletePostToAxios = (postId) => async (dispatch) => {
     console.error(error);
   }
 };
+
+// export const addCommentToAxios = (postId) => async (dispatch) => {};

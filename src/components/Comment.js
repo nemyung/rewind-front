@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// {
+//   result: "success"<String>
+//   nickname: "nickname"<String>
+//   comment: comment<String
+//   insertDt: insertDt<String>
+//   commentId: comment unique id
+// }
+
 const Comment = ({ comment }) => {
   return (
     <div>
