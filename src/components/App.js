@@ -9,17 +9,19 @@ import PostWrite from '../pages/PostWrite';
 function App() {
   return (
     <>
-      <Header />
       <Switch>
         <Route exact path="/sign">
           <Sign />
         </Route>
-        <Route exact path="/">
-          <PostsList />
-        </Route>
-        <Route exact path="/new">
-          <PostWrite />
-        </Route>
+        <>
+          <Header />
+          <Route exact path="/">
+            <PostsList />
+          </Route>
+          <Route exact path="/new">
+            <PostWrite />
+          </Route>
+        </>
       </Switch>
     </>
   );
