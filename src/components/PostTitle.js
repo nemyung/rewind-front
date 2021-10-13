@@ -16,6 +16,8 @@ const PostTitle = ({ id = '', idx = '' }) => {
     history.push(`/detail/${id}`);
   };
 
+  console.log(id, idx);
+
   return (
     <>
       <TableRow

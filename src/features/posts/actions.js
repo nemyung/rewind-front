@@ -37,7 +37,7 @@ export const loadPostsToAxios = () => async (dispatch) => {
     const res = await axios.get(`${baseURL}/posts`);
     console.log(res);
     // const postList = await axiosInstace.getPost();
-    // dispatch(loadPosts(postList.data));
+    dispatch(loadPosts(res.data.posts));
   } catch (e) {
     console.log(e);
   }
@@ -47,8 +47,10 @@ export const createPostToAxios = (post) => async (dispatch) => {
   try {
     console.log(post);
     const res = await T.POST('/posts/new', post);
-    // console.log(res);
-    // dispatch(createPost(newPost));
+    console.log(res);
+    // 현재 response는 success 밖에 없음
+
+    dispatch(createPost(post));
   } catch (e) {
     console.log(e);
   }

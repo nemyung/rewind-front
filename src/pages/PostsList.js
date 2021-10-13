@@ -31,6 +31,7 @@ const PostsList = () => {
       return;
     }
     dispatch(loadPostsToAxios());
+    
   }, []);
 
   return (
