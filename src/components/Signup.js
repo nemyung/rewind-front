@@ -16,7 +16,7 @@ import {
 } from '../hooks';
 import { isAllTrue } from '../utils';
 
-const Signup = ({ toggle = noop }) => {
+const SignUp = ({ toggle = noop }) => {
   const [email, isEmailValid, onEmailChange] = useValidation('email', '');
   const [emailLoading, emailFailMessage, emailSuccessMessage, checkEmail] =
     useDuplicationCheck('id');
@@ -218,7 +218,7 @@ const Signup = ({ toggle = noop }) => {
   );
 };
 
-Signup.propTypes = {
+SignUp.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
 
@@ -231,4 +231,4 @@ const SuccessMessage = styled(ErrorMessage)`
   color: #009688;
 `;
 
-export default Signup;
+export default SignUp;
