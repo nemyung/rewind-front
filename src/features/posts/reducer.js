@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer';
-import { LOAD, CREATE, DELETE, UPDATE } from './types';
+import { LOAD, CREATE, DELETE, UPDATE, ADD_COMMENT } from './types';
 
 const initialState = {
   byId: {},
@@ -52,6 +52,11 @@ export default function postsReducer(state = initialState, action) {
       case DELETE: {
         delete draft.byId[action.payload];
         draft.allIds = draft.allIds.filter((id) => id !== action.payload);
+        break;
+      }
+      case ADD_COMMENT: {
+        const { postId, addedComment } = action.payload;
+        draft.byId[postId].comments.unshift(addedComment);
         break;
       }
       default:
