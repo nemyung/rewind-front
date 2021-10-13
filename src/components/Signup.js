@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
-// import axios from 'axios';
+import axios from 'axios';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -15,6 +15,8 @@ import {
   matchPasswordLength,
   validateInput,
 } from '../utils';
+
+const serverURI = process.env.REACT_APP_REMOTE_SERVER_URI;
 
 const Signup = ({ toggle = noop }) => {
   const [email, , onEmailChange, isEmailValid] = useValidation(
@@ -41,28 +43,23 @@ const Signup = ({ toggle = noop }) => {
   const handleDuplicateCheck = async (type, input, toggleFn) => {
     toggleFn(true);
 
-    console.log(type, input, toggleFn);
-    console.log({ [type]: input }); // done
-    const result = 'success';
-    // const url = `/signup_duplicate_${type}`;
+    const key = type === 'id' ? 'email' : 'nickname';
 
     try {
-      // const res = await axios.post(url, { [type]: input });
-      // const {
-      //   data: { result },
-      // } = res;
+      const res = await axios.post(`${serverURI}/signup/duplicate_${type}`, {
+        [key]: input,
+      });
+      const {
+        data: { result, message = '' },
+      } = res;
 
-      if (result === 'success') {
-        console.log('성공시의 로직 다루기');
-      } else {
-        console.log('실패시의 로직 다루기');
+      if (result === 'fail') {
+        console.log(message);
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setTimeout(() => {
-        toggleFn(false);
-      }, 5000);
+      toggleFn(false);
     }
   };
 
@@ -78,17 +75,17 @@ const Signup = ({ toggle = noop }) => {
     }
 
     try {
-      // const res = axios.post('/login', {
-      //   email,
-      //   pw,
-      //   pwCheck: pwAgain,
-      //   nickname,
-      // });
+      const res = await axios.post(`${serverURI}/signup`, {
+        email,
+        pw,
+        pwCheck: pwAgain,
+        nickname,
+      });
+      console.log(res);
 
-      // const { data: { result } } = res;
-      const result = 'success';
-
-      if (result === 'success') {
+      const { data } = res;
+      console.log(data);
+      if (data) {
         toggle();
       } else {
         console.log('회원가입 관련 로직 작성'); // TODOS 오류메세지 뿌리기
@@ -131,9 +128,7 @@ const Signup = ({ toggle = noop }) => {
             helperText={!isEmailValid && '유효하지 않은 이메일 형식입니다.'}
           />
           <LoadingButton
-            onClick={() =>
-              handleDuplicateCheck('email', email, setEmailLoading)
-            }
+            onClick={() => handleDuplicateCheck('id', email, setEmailLoading)}
             loading={emailLoading}
             variant="outlined"
             sx={{

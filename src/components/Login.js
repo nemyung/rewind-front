@@ -2,7 +2,7 @@ import React from 'react';
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -24,13 +24,11 @@ const Login = ({ toggle = noop }) => {
   const [pw, setPw] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    console.log('hi');
-    console.log(email, pw);
 
     const invalidationMessage = validateInput(email, pw);
     if (validateInput(email, pw)) {
@@ -44,7 +42,7 @@ const Login = ({ toggle = noop }) => {
     try {
       await dispatch(loginToServer(email, pw));
       setIsLoading(false);
-      history.replace('/');
+      // history.replace('/');
     } catch (error) {
       console.log('axios 실패 대비...');
       console.error(error);
