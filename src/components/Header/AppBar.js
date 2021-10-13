@@ -1,5 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,9 +16,22 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { SwipeableDrawer } from '@mui/material';
 
-const MobileBar = () => {
-  const history = useHistory();
+import { logOut } from '../../features/user/actions';
+import { removeToken } from '../../utils/auth';
+
+const TopNevigation = ({ status }) => {
   const [isToggleOpen, setIsToggleOpen] = React.useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleLogin = () => history.push('/sign');
+  const handleLogout = () => {
+    const key = process.env.REACT_APP_TOKEN_KEY;
+    removeToken(key);
+    dispatch(logOut());
+    history.replace('/sign');
+  };
+
   const category = ['React', 'Node', 'Spring'];
 
   const toggle = (open) => (event) => {
@@ -59,7 +75,15 @@ const MobileBar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
-        <Toolbar>
+        <Toolbar
+          sx={{
+            width: '100%',
+            height: '120px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <IconButton
             size="large"
             edge="start"
@@ -71,10 +95,10 @@ const MobileBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            모두보기
+            REWIND, REMIND
           </Typography>
-          <Button color="inherit" onClick={() => history.push('/sign')}>
-            Login
+          <Button color="inherit" onClick={status ? handleLogout : handleLogin}>
+            {status ? 'Logout' : 'Login'}
           </Button>
         </Toolbar>
         <SwipeableDrawer
@@ -89,4 +113,8 @@ const MobileBar = () => {
   );
 };
 
-export default MobileBar;
+TopNevigation.propTypes = {
+  status: PropTypes.bool.isRequired,
+};
+
+export default TopNevigation;

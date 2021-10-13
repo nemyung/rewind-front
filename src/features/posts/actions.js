@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+import axios from 'axios';
 import { LOAD, CREATE, DELETE, UPDATE } from './types';
 import axiosInstace from '../../api/axiosInstace';
+import T from '../../api/tokenInstance';
 
 // ActionCreator
 export const loadPosts = (postList) => ({
@@ -22,11 +25,14 @@ export const deletePost = (postId) => ({
   payload: postId,
 });
 
+const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 // MiddleWare
 export const loadPostsToAxios = () => async (dispatch) => {
   try {
-    const postList = await axiosInstace.getPost();
-    dispatch(loadPosts(postList.data));
+    const res = await axios.get(`${baseURL}/posts`);
+    console.log(res);
+    // const postList = await axiosInstace.getPost();
+    // dispatch(loadPosts(postList.data));
   } catch (e) {
     console.log(e);
   }
@@ -34,8 +40,10 @@ export const loadPostsToAxios = () => async (dispatch) => {
 
 export const createPostToAxios = (post) => async (dispatch) => {
   try {
-    const newPost = await axiosInstace.createPost(post);
-    dispatch(createPost(newPost));
+    console.log(post);
+    const res = await T.POST('/posts/new', post);
+    console.log(res);
+    // dispatch(createPost(newPost));
   } catch (e) {
     console.log(e);
   }
@@ -70,11 +78,10 @@ export const updatePostToAxios =
 // };
 
 export const deletePostToAxios = (postId) => async (dispatch) => {
-  console.log(postId);
-  const delPost = await axiosInstace.delPost(postId);
-  const postList = await axiosInstace.getPost();
-  console.log(delPost);
-  console.log(postList.data);
-
-  dispatch(deletePost(postList.data));
+  try {
+    await T.DELETE('/posts', postId);
+    dispatch(deletePost(postId));
+  } catch (error) {
+    console.error(error);
+  }
 };

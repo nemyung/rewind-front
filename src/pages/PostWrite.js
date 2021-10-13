@@ -10,7 +10,7 @@ const PostWrite = () => {
   const [contents, setContents] = React.useState('');
 
   const createPost = () => {
-    dispatch(createPostToAxios({ id: '', title, contents }));
+    dispatch(createPostToAxios({ title, contents }));
   };
 
   return (
