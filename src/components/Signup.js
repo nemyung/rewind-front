@@ -1,104 +1,47 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
-import axios from 'axios';
 
+import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import useValidation from '../hooks/useValidation';
 import {
-  isAllTrue,
-  validateEmail,
-  matchPasswordLength,
-  validateInput,
-} from '../utils';
-
-const serverURI = process.env.REACT_APP_REMOTE_SERVER_URI;
+  useSignUp,
+  useValidation,
+  useDuplicationCheck,
+  useInput,
+} from '../hooks';
+import { isAllTrue } from '../utils';
 
 const Signup = ({ toggle = noop }) => {
-  const [email, , onEmailChange, isEmailValid] = useValidation(
-    validateEmail,
-    '',
-  );
-  const [emailLoading, setEmailLoading] = React.useState(false);
+  const [email, isEmailValid, onEmailChange] = useValidation('email', '');
+  const [emailLoading, emailFailMessage, emailSuccessMessage, checkEmail] =
+    useDuplicationCheck('id');
 
-  const [pw, , onPwChange, isPwEnoughLength] = useValidation(
-    matchPasswordLength,
-    '',
-  );
-
-  const [pwAgain, , onPwAgainChange, isPwAgainEnoughLength] = useValidation(
-    matchPasswordLength,
+  const [pw, isPwValid, onPwChange] = useValidation('password', '');
+  const [pwAgain, isPwAgainValid, onPwAgainChange] = useValidation(
+    'password',
     '',
   );
 
-  const [nickname, setNickname] = React.useState('');
-  const [nicknameLoading, setNicknameLoading] = React.useState(false);
+  const [nickname, onNicknameChange] = useInput('');
+  const [
+    nicknameLoading,
+    nicknameFailMessage,
+    nicknameSuccessMessage,
+    checkNickname,
+  ] = useDuplicationCheck('nickname');
+
+  const [submitLoading, formErrorMessage, signUp] = useSignUp(toggle);
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    signUp(email, pw, pwAgain, nickname);
+  };
 
   const isTabletView = window.matchMedia('(min-width: 768px)').matches;
-
-  const handleDuplicateCheck = async (type, input, toggleFn) => {
-    toggleFn(true);
-
-    const key = type === 'id' ? 'email' : 'nickname';
-
-    try {
-      const res = await axios.post(`${serverURI}/signup/duplicate_${type}`, {
-        [key]: input,
-      });
-      const {
-        data: { result, message = '' },
-      } = res;
-
-      if (result === 'fail') {
-        console.log(message);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      toggleFn(false);
-    }
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    const invalidationMessage = validateInput(email, pw, pwAgain);
-    if (invalidationMessage) {
-      console.log('----------validation실패----------');
-      console.log(invalidationMessage); // TODOS 오류메세지 뿌리기
-      console.log('---------------------------------');
-      return;
-    }
-
-    try {
-      const res = await axios.post(`${serverURI}/signup`, {
-        email,
-        pw,
-        pwCheck: pwAgain,
-        nickname,
-      });
-      console.log(res);
-
-      const { data } = res;
-      console.log(data);
-      if (data) {
-        toggle();
-      } else {
-        console.log('회원가입 관련 로직 작성'); // TODOS 오류메세지 뿌리기
-      }
-    } catch (error) {
-      console.log('----------서버에러----------');
-      console.log(error); // TODOS 오류메세지 뿌리기
-      console.log('---------------------------------');
-    } finally {
-      console.log('isLoading관련작업 수정해보기');
-    }
-  };
-
   return (
     <>
       <Box
@@ -117,27 +60,40 @@ const Signup = ({ toggle = noop }) => {
           }}
         >
           <TextField
+            fullWidth
             label="이메일"
-            error={!isEmailValid}
             type="email"
             value={email}
             margin="dense"
             size={isTabletView ? 'normal' : 'small'}
             onChange={(e) => onEmailChange(e.target.value)}
-            fullWidth
+            error={!isEmailValid}
             helperText={!isEmailValid && '유효하지 않은 이메일 형식입니다.'}
           />
-          <LoadingButton
-            onClick={() => handleDuplicateCheck('id', email, setEmailLoading)}
-            loading={emailLoading}
-            variant="outlined"
-            sx={{
-              width: `${isTabletView ? 'auto' : '100%'}`,
-              alignSelf: 'flex-end',
-            }}
+          <Stack
+            direction={{ xs: 'column', sm: 'row-reverse' }}
+            justifyContent="space-between"
+            alignItems="center"
           >
-            중복 확인
-          </LoadingButton>
+            <LoadingButton
+              onClick={() => checkEmail(email)}
+              loading={emailLoading}
+              variant="outlined"
+              disabled={!email}
+              sx={{
+                width: `${isTabletView ? 'auto' : '100%'}`,
+                alignSelf: 'flex-end',
+                mb: 1,
+              }}
+            >
+              중복 확인
+            </LoadingButton>
+            {emailFailMessage ? (
+              <ErrorMessage>{emailFailMessage}</ErrorMessage>
+            ) : (
+              <SuccessMessage>{emailSuccessMessage}</SuccessMessage>
+            )}
+          </Stack>
         </Box>
         <Box
           sx={{
@@ -149,13 +105,13 @@ const Signup = ({ toggle = noop }) => {
         >
           <TextField
             label="비밀번호"
-            error={!isPwEnoughLength}
+            error={!isPwValid}
             type="password"
             size={isTabletView ? 'normal' : 'small'}
             value={pw}
             onChange={(e) => onPwChange(e.target.value)}
             helperText={
-              !isPwEnoughLength && '비밀번호는 6자 이상 20자 이하입니다.'
+              !isPwValid && '6자 이상 20자 이하의 비밀번호를 작성해주세요.'
             }
             fullWidth
           />
@@ -171,13 +127,13 @@ const Signup = ({ toggle = noop }) => {
             label="비밀번호 확인"
             type="password"
             value={pwAgain}
-            error={!isPwAgainEnoughLength}
+            error={!isPwAgainValid}
             margin="dense"
             size={isTabletView ? 'normal' : 'small'}
             fullWidth
             onChange={(e) => onPwAgainChange(e.target.value)}
             helperText={
-              !isPwAgainEnoughLength && '비밀번호는 6자 이상 20자 이하입니다.'
+              !isPwAgainValid && '비밀번호는 6자 이상 20자 이하입니다.'
             }
           />
         </Box>
@@ -195,22 +151,33 @@ const Signup = ({ toggle = noop }) => {
             value={nickname}
             margin="dense"
             size={isTabletView ? 'normal' : 'small'}
-            onChange={(e) => setNickname(e.target.value)}
+            onChange={onNicknameChange}
             fullWidth
           />
-          <LoadingButton
-            loading={nicknameLoading}
-            variant="outlined"
-            onClick={() =>
-              handleDuplicateCheck('nickname', nickname, setNicknameLoading)
-            }
-            sx={{
-              width: `${isTabletView ? 'auto' : '100%'}`,
-              alignSelf: 'flex-end',
-            }}
+          <Stack
+            direction={{ xs: 'column', sm: 'row-reverse' }}
+            justifyContent="space-between"
+            alignItems="center"
           >
-            중복 확인
-          </LoadingButton>
+            <LoadingButton
+              loading={nicknameLoading}
+              variant="outlined"
+              disabled={!nickname}
+              onClick={() => checkNickname(nickname)}
+              sx={{
+                width: `${isTabletView ? 'auto' : '100%'}`,
+                alignSelf: 'flex-end',
+                mb: 1,
+              }}
+            >
+              중복 확인
+            </LoadingButton>
+            {nicknameFailMessage ? (
+              <ErrorMessage>{nicknameFailMessage}</ErrorMessage>
+            ) : (
+              <SuccessMessage>{nicknameSuccessMessage}</SuccessMessage>
+            )}
+          </Stack>
         </Box>
         <Box
           sx={{
@@ -224,24 +191,27 @@ const Signup = ({ toggle = noop }) => {
           <LoadingButton variant="outlined" size="large" onClick={toggle}>
             뒤로 가기
           </LoadingButton>
-          <Button
+          <LoadingButton
             variant="contained"
             size="large"
             onClick={handleFormSubmit}
+            loading={submitLoading}
             disabled={
               !isAllTrue(
-                email,
                 isEmailValid,
-                pw,
-                isPwEnoughLength,
-                pwAgain,
-                isPwAgainEnoughLength,
-                nickname,
+                emailSuccessMessage,
+                isPwValid,
+                isPwAgainValid,
+                nicknameSuccessMessage,
+                !formErrorMessage,
               )
             }
           >
             가입하기
-          </Button>
+          </LoadingButton>
+        </Box>
+        <Box sx={{ textAlign: 'center', my: 2 }}>
+          {formErrorMessage && <ErrorMessage>{formErrorMessage}</ErrorMessage>}
         </Box>
       </Box>
     </>
@@ -251,5 +221,14 @@ const Signup = ({ toggle = noop }) => {
 Signup.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
+
+export const ErrorMessage = styled.small`
+  font-size: 12px;
+  color: #d32f2f;
+`;
+
+const SuccessMessage = styled(ErrorMessage)`
+  color: #009688;
+`;
 
 export default Signup;

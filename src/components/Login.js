@@ -1,8 +1,6 @@
 import React from 'react';
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-// import { useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,38 +13,17 @@ import LoginIcon from '@mui/icons-material/Login';
 import PasswordIcon from '@mui/icons-material/Password';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import DirectionsBoatFilledIcon from '@mui/icons-material/DirectionsBoatFilled';
-
-import { validateInput } from '../utils';
-import { loginToServer } from '../features/user/actions';
+import { ErrorMessage } from './Signup';
+import { useInput, useLogin } from '../hooks';
 
 const Login = ({ toggle = noop }) => {
-  const [email, setEmail] = React.useState('');
-  const [pw, setPw] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
-  const dispatch = useDispatch();
-  // const history = useHistory();
+  const [email, handleEmailChange] = useInput('');
+  const [pw, handlePwChange] = useInput('');
+  const [loading, failMessage, login] = useLogin();
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-
-    const invalidationMessage = validateInput(email, pw);
-    if (validateInput(email, pw)) {
-      console.log('----------validation실패----------');
-      console.log(invalidationMessage); // TODOS 오류메세지 뿌리기
-      console.log('---------------------------------');
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      await dispatch(loginToServer(email, pw));
-      setIsLoading(false);
-      // history.replace('/');
-    } catch (error) {
-      console.log('axios 실패 대비...');
-      console.error(error);
-    }
+    login(email, pw);
   };
 
   return (
@@ -54,7 +31,7 @@ const Login = ({ toggle = noop }) => {
       <TextField
         type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={handleEmailChange}
         margin="normal"
         fullWidth
         InputProps={{
@@ -69,7 +46,7 @@ const Login = ({ toggle = noop }) => {
         type="password"
         value={pw}
         fullWidth
-        onChange={(e) => setPw(e.target.value)}
+        onChange={handlePwChange}
         margin="dense"
         InputProps={{
           startAdornment: (
@@ -80,14 +57,19 @@ const Login = ({ toggle = noop }) => {
         }}
       />
       <LoadingButton
-        loading={isLoading}
+        loading={loading}
         variant="outlined"
         onClick={handleFormSubmit}
-        sx={{ width: '100%', margin: '16px 0' }}
+        sx={{ width: '100%', margin: '16px 0 8px 0' }}
         startIcon={<LoginIcon />}
       >
         로그인 하기
       </LoadingButton>
+      {failMessage && (
+        <Box sx={{ textAlign: 'center', my: 1 }}>
+          <ErrorMessage>{failMessage}</ErrorMessage>
+        </Box>
+      )}
       <Button
         variant="contained"
         onClick={toggle}
