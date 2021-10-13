@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Login from '../components/Login';
-import Signup from '../components/Signup';
+import SignUp from '../components/SignUp';
 
 import bgSrc from '../assets/bg.jpg';
 
@@ -51,7 +51,7 @@ const Sign = () => {
         {isLoginMode ? (
           <Login toggle={toggleMode} />
         ) : (
-          <Signup toggle={toggleMode} />
+          <SignUp toggle={toggleMode} />
         )}
       </Box>
     </Box>
