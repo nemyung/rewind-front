@@ -17,6 +17,7 @@ import {
 import { isAllTrue } from '../utils';
 
 const SignUp = ({ toggle = noop }) => {
+  console.log('hello world');
   const [email, isEmailValid, onEmailChange] = useValidation('email', '');
   const [emailLoading, emailFailMessage, emailSuccessMessage, checkEmail] =
     useDuplicationCheck('id');
