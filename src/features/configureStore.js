@@ -5,7 +5,6 @@ import { connectRouter } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-import comments from './comments/reducer';
 import user from './user/reducer';
 import posts from './posts/reducer';
 
@@ -19,7 +18,6 @@ if (process.env.NODE_ENV === 'development') {
 const rootReducer = combineReducers({
   user,
   posts,
-  comments,
   router: connectRouter(history),
 });
 
