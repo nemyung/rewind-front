@@ -1,16 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { history } from '../features/configureStore';
-import { createPostToAxios } from '../features/posts/actions';
+import { updatePostToAxios } from '../features/posts/actions';
 
-const PostWrite = () => {
-  const dispatch = useDispatch();
+/* eslint-disable */
 
+const PostEdit = (props) => {
   const [title, setTitle] = React.useState('');
   const [contents, setContents] = React.useState('');
 
-  const createPost = () => {
-    dispatch(createPostToAxios({ id: '', title, contents }));
+  const dispatch = useDispatch();
+
+
+
+  const editPost = () => {
+    console.log(contents);
+    // postid, contents
+    dispatch(updatePostToAxios({ id: '', title, contents }));
   };
 
   return (
@@ -18,13 +24,7 @@ const PostWrite = () => {
       <div>
         <label htmlFor="postTitle">
           제목
-          <input
-            id="postTitle"
-            type="text"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
+          <input id="postTitle" type="text" />
         </label>
       </div>
       <div>
@@ -34,9 +34,7 @@ const PostWrite = () => {
             id="postDesc"
             placeholder="게시글 입력"
             type="text"
-            onChange={(e) => {
-              setContents(e.target.value);
-            }}
+            onChange={setContents}
           />
         </label>
       </div>
@@ -57,9 +55,4 @@ const PostWrite = () => {
   );
 };
 
-PostWrite.defaultProps = {
-  title: '님들 이거 맞춰보세용',
-  contents: '우리 조는 왜 4명밖에 없게요?',
-};
-
-export default PostWrite;
+export default PostEdit;
