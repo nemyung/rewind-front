@@ -16,6 +16,8 @@ export default function userReducer(state = initialState, action) {
         break;
       }
       case LOG_OUT: {
+        draft.email = '';
+        draft.nickname = '';
         break;
       }
       default:

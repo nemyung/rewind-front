@@ -1,10 +1,13 @@
 import React from 'react';
-import WebBar from './WebBar';
+import { useSelector } from 'react-redux';
+
 import AppBar from './AppBar';
 
 const Header = () => {
-  const isTabletView = window.matchMedia('(min-width: 768px)').matches;
-  return isTabletView ? <WebBar /> : <AppBar />;
+  const isUserLogin = useSelector((state) => Boolean(state.user.email));
+  console.log(isUserLogin);
+
+  return <AppBar status={isUserLogin} />;
 };
 
 export default Header;
