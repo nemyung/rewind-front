@@ -1,19 +1,24 @@
 /* eslint-disable no-alert */
 import React from 'react';
+// import { useDispatch } from 'react-redux';
 import { history } from '../features/configureStore';
 import T from '../api/tokenInstance';
+// import { createPost } from '../features/posts/actions';
 
 const PostWrite = () => {
+  // const dispatch = useDispatch();
   const [title, setTitle] = React.useState('');
   const [contents, setContents] = React.useState('');
   const [category, setCategory] = React.useState('React');
 
-  const createPost = async () => {
+  const addPost = async () => {
     const { data } = await T.POST('/posts/new', {
       title,
       contents,
       category,
     });
+
+    // dispatch(createPost(data.data));
 
     if (data.result === 'fail') {
       alert('오류 발생!');
@@ -91,7 +96,7 @@ const PostWrite = () => {
         </label>
       </div>
       <div>
-        <button type="button" onClick={createPost}>
+        <button type="button" onClick={addPost}>
           작성완료
         </button>
         <button

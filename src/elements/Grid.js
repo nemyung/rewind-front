@@ -14,6 +14,7 @@ const Grid = (props) => {
     center,
     maxheight,
     _onClick,
+    height,
   } = props;
 
   const styles = {
@@ -24,6 +25,7 @@ const Grid = (props) => {
     bg,
     center,
     maxheight,
+    height,
   };
 
   return (
@@ -41,6 +43,7 @@ Grid.defaultProps = {
   width: '100%',
   padding: false,
   margin: false,
+  height : false,
   bg: false,
   center: false,
   maxheight: false,
@@ -49,11 +52,13 @@ Grid.defaultProps = {
 
 const GridBox = styled.div`
   width: ${(props) => props.width};
+  height: ${(props) => props.height};
   box-sizing: border-box;
   /* max-width: 600px; */
   ${(props) => (props.padding ? `padding : ${props.padding};` : '')}
   ${(props) => (props.margin ? `margin : ${props.margin};` : '')}
   ${(props) => (props.bg ? `background-color : ${props.bg};` : '')}
+  
   ${(props) =>
     props.is_flex
       ? `display: flex; align-items: center; justify-content: space-between;`
