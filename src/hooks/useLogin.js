@@ -30,7 +30,7 @@ export default function useLogin() {
       console.error(e);
     }
 
-    if (data.errorMessage) {
+    if (data?.errorMessage) {
       setFailMessage(data.errorMessage);
       setIsLoading(false);
       return;

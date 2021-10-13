@@ -20,7 +20,6 @@ const initialState = {
 
 export default function postsReducer(state = initialState, action) {
   return produce(state, (draft) => {
-    console.log(draft);
     switch (action.type) {
       case LOAD: {
         console.log('LOAD');
@@ -51,8 +50,8 @@ export default function postsReducer(state = initialState, action) {
         break;
       }
       case DELETE: {
-        console.log('DELETE');
-        console.log(action.payload);
+        delete draft.byId[action.payload];
+        draft.allIds = draft.allIds.filter((id) => id !== action.payload);
         break;
       }
       default:

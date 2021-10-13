@@ -13,7 +13,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import PasswordIcon from '@mui/icons-material/Password';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import DirectionsBoatFilledIcon from '@mui/icons-material/DirectionsBoatFilled';
-import { ErrorMessage } from './SignUp';
+import { ErrorMessage } from './Signup';
 import { useInput, useLogin } from '../hooks';
 
 const Login = ({ toggle = noop }) => {
