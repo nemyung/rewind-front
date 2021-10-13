@@ -24,7 +24,6 @@ const PostWrite = () => {
     } else {
       history.replace('/');
     }
-    // dispatch(createPostToAxios({ title, contents, category }));
   };
   console.log(category);
   const handleRadioChange = (event) => setCategory(event.target.value);
