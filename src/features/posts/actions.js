@@ -42,7 +42,7 @@ export const createPostToAxios = (post) => async (dispatch) => {
   try {
     console.log(post);
     const res = await T.POST('/posts/new', post);
-    console.log(res);
+    // console.log(res);
     // dispatch(createPost(newPost));
   } catch (e) {
     console.log(e);
