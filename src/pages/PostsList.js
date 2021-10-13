@@ -19,8 +19,6 @@ const PostsList = () => {
     dispatch(loadPostsToAxios());
   }, []);
 
-  console.log(postList.allIds);
-
   return (
     <>
       {postList.allIds.map((id, idx) => {

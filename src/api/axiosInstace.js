@@ -19,7 +19,7 @@ export default {
   createPost: (post) => instance.post('/posts', post),
 
   // 게시물 수정하기
-  editPost: (id, content) => instance.put(`/posts/${id}`, content),
+  editPost: (id, updatePost) => instance.put(`/posts/${id}`, updatePost),
   // 게시물 삭제하기
   delPost: (id) => instance.delete(`/posts/${id}`),
 };
