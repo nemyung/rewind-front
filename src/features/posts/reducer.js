@@ -24,7 +24,7 @@ export default function postsReducer(state = initialState, action) {
     switch (action.type) {
       case LOAD: {
         console.log('LOAD');
-        console.log(action);
+        console.log(action.payload);
         action.payload.forEach((document) => {
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
@@ -42,6 +42,12 @@ export default function postsReducer(state = initialState, action) {
       case UPDATE: {
         console.log('UPDATE');
         console.log(action.payload);
+        const { postId, updatedData } = action.payload;
+        // updatedData의 key를 배열로 만든다.
+        // [id, title, contents]
+        Object.keys(updatedData).forEach((key) => {
+          draft.byId[postId][key] = updatedData[key];
+        });
         break;
       }
       case DELETE: {

@@ -1,22 +1,44 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { history } from '../features/configureStore';
 import { updatePostToAxios } from '../features/posts/actions';
 
-/* eslint-disable */
+// /* eslint-disable */
 
-const PostEdit = (props) => {
-  const [title, setTitle] = React.useState('');
-  const [contents, setContents] = React.useState('');
-
+const PostEdit = () => {
+  const params = useParams();
   const dispatch = useDispatch();
-
-
+  const [updateTitle, setUpdateTitle] = React.useState('');
+  const [updateContents, setUpdateContents] = React.useState('');
 
   const editPost = () => {
-    console.log(contents);
     // postid, contents
-    dispatch(updatePostToAxios({ id: '', title, contents }));
+    dispatch(
+      // 로컬 테스트
+      updatePostToAxios(params.id, {
+        title: updateTitle,
+        contents: updateContents,
+      }),
+
+      // 명세 된 형식으로 보냄.
+      // updatePostToAxios({
+      //   id: params.id,
+      //   title: updateTitle,
+      //   contents: updateContents,
+      // }),
+    );
+    console.log(params);
+    console.log(updateTitle);
+    console.log(updateContents);
+  };
+
+  const editTitle = (e) => {
+    setUpdateTitle(e.target.value);
+  };
+
+  const editContents = (e) => {
+    setUpdateContents(e.target.value);
   };
 
   return (
@@ -24,7 +46,7 @@ const PostEdit = (props) => {
       <div>
         <label htmlFor="postTitle">
           제목
-          <input id="postTitle" type="text" />
+          <input id="postTitle" type="text" onChange={editTitle} />
         </label>
       </div>
       <div>
@@ -34,12 +56,12 @@ const PostEdit = (props) => {
             id="postDesc"
             placeholder="게시글 입력"
             type="text"
-            onChange={setContents}
+            onChange={editContents}
           />
         </label>
       </div>
       <div>
-        <button type="button" onClick={createPost}>
+        <button type="button" onClick={editPost}>
           작성완료
         </button>
         <button
