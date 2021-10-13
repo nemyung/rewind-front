@@ -1,17 +1,32 @@
+/* eslint-disable no-alert */
 import React from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { history } from '../features/configureStore';
-import { createPostToAxios } from '../features/posts/actions';
+// import { createPostToAxios } from '../features/posts/actions';
+import T from '../api/tokenInstance';
 
 const PostWrite = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [title, setTitle] = React.useState('');
   const [contents, setContents] = React.useState('');
+  const [category, setCategory] = React.useState('React');
 
-  const createPost = () => {
-    dispatch(createPostToAxios({ title, contents }));
+  const createPost = async () => {
+    const { data = {} } = await T.POST('/posts/new', {
+      title,
+      contents,
+      category,
+    });
+
+    if (data.result === 'fail') {
+      alert('오류 발생!');
+    } else {
+      history.replace('/');
+    }
   };
+  console.log(category);
+  const handleRadioChange = (event) => setCategory(event.target.value);
 
   return (
     <>
@@ -26,6 +41,41 @@ const PostWrite = () => {
             }}
           />
         </label>
+        <div>
+          <label htmlFor="category">
+            <input
+              id="React"
+              name="React"
+              value="React"
+              type="radio"
+              checked={category === 'React'}
+              onChange={handleRadioChange}
+            />
+            React
+          </label>
+          <label htmlFor="category">
+            <input
+              id="NodeJS"
+              name="NodeJS"
+              value="NodeJS"
+              type="radio"
+              checked={category === 'NodeJS'}
+              onChange={handleRadioChange}
+            />
+            NodeJS
+          </label>
+          <label htmlFor="category">
+            <input
+              id="Spring"
+              name="Spring"
+              value="Spring"
+              type="radio"
+              checked={category === 'Spring'}
+              onChange={handleRadioChange}
+            />
+            Spring
+          </label>
+        </div>
       </div>
       <div>
         <label htmlFor="postWrite">
