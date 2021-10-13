@@ -1,31 +1,42 @@
 /* eslint-disable no-alert */
 import React from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { history } from '../features/configureStore';
-// import { createPostToAxios } from '../features/posts/actions';
-import T from '../api/tokenInstance';
+import { createPostToAxios } from '../features/posts/actions';
 
 const PostWrite = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [title, setTitle] = React.useState('');
   const [contents, setContents] = React.useState('');
   const [category, setCategory] = React.useState('React');
 
-  const createPost = async () => {
-    const { data = {} } = await T.POST('/posts/new', {
-      title,
-      contents,
-      category,
-    });
+  // const createPost = async () => {
+  //   const { data = {} } = await T.POST('/posts/new', {
+  //     title,
+  //     contents,
+  //     category,
+  //   });
 
-    if (data.result === 'fail') {
-      alert('오류 발생!');
-    } else {
-      history.replace('/');
-    }
+  //   if (data.result === 'fail') {
+  //     alert('오류 발생!');
+  //   } else {
+  //     dispatch(create)
+  //     history.replace('/');
+  //   }
+  // };
+  // console.log(category);
+
+  const createPost = () => {
+    dispatch(
+      createPostToAxios({
+        title,
+        contents,
+        category,
+      }),
+    );
+    history.replace('/');
   };
-  console.log(category);
   const handleRadioChange = (event) => setCategory(event.target.value);
 
   return (

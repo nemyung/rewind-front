@@ -16,17 +16,17 @@ const PostEdit = () => {
     // postid, contents
     dispatch(
       // 로컬 테스트
-      updatePostToAxios(params.id, {
-        title: updateTitle,
-        contents: updateContents,
-      }),
-
-      // 명세 된 형식으로 보냄.
-      // updatePostToAxios({
-      //   id: params.id,
+      // updatePostToAxios(params.id, {
       //   title: updateTitle,
       //   contents: updateContents,
       // }),
+
+      // 명세 된 형식으로 보냄.
+      updatePostToAxios({
+        id: params.id,
+        title: updateTitle,
+        contents: updateContents,
+      }),
     );
     console.log(params);
     console.log(updateTitle);
