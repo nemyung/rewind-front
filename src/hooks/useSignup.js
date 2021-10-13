@@ -5,7 +5,7 @@ import { validateInput } from '../utils';
 const SUCCESS = 'success';
 const serverURI = process.env.REACT_APP_REMOTE_SERVER_URI;
 
-export default function useSignup(after) {
+export default function useSignUp(after) {
   const [loading, setLoading] = React.useState(false);
   const [failMessage, setFailMessage] = React.useState('');
 

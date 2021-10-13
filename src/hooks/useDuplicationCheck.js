@@ -17,8 +17,6 @@ export default function useDuplicationCheck(type) {
     setSuccessMessage('');
 
     const key = type === 'id' ? 'email' : 'nickname';
-    console.log(`${serverURI}/signup/duplicate_${type}`);
-    console.log({ [key]: input });
     try {
       const response = await axios.post(
         `${serverURI}/signup/duplicate_${type}`,
@@ -26,8 +24,6 @@ export default function useDuplicationCheck(type) {
           [key]: input,
         },
       );
-
-      console.log(response);
 
       const {
         data: { result, message },
@@ -51,9 +47,3 @@ export default function useDuplicationCheck(type) {
 
   return [isLoading, failMessage, successMessage, checkDuplicate];
 }
-// handleDuplicateCheck(
-//   'id',
-//   email,
-//   setEmailCheckFailMessage,
-//   setEmailLoading,
-// )

@@ -8,10 +8,12 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import useValidation from '../hooks/useValidation';
-import useDuplicationCheck from '../hooks/useDuplicationCheck';
-import useSignup from '../hooks/useSignup';
-import useInput from '../hooks/useInput';
+import {
+  useSignUp,
+  useValidation,
+  useDuplicationCheck,
+  useInput,
+} from '../hooks';
 import { isAllTrue } from '../utils';
 
 const Signup = ({ toggle = noop }) => {
@@ -33,7 +35,7 @@ const Signup = ({ toggle = noop }) => {
     checkNickname,
   ] = useDuplicationCheck('nickname');
 
-  const [submitLoading, formErrorMessage, signUp] = useSignup(toggle);
+  const [submitLoading, formErrorMessage, signUp] = useSignUp(toggle);
   const handleFormSubmit = (event) => {
     event.preventDefault();
     signUp(email, pw, pwAgain, nickname);
@@ -220,7 +222,7 @@ Signup.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
 
-const ErrorMessage = styled.small`
+export const ErrorMessage = styled.small`
   font-size: 12px;
   color: #d32f2f;
 `;
