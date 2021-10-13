@@ -9,12 +9,14 @@ import { useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 // import CommentList from '../components/CommentList';
 // import CommentForm from '../components/CommentForm';
-import { Grid } from '../elements';
+// import { Grid, Text } from '../elements';
 import { deletePostToAxios } from '../features/posts/actions';
 import { history } from '../features/configureStore';
 
@@ -48,10 +50,13 @@ const PostDetail = (props) => {
 
   console.log(isPost);
   return (
-    <Grid padding='50px 200px'>
-    <Card sx={{ Width: 600, height: 500 }}>
+    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
-       
+        avatar={
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+            R
+          </Avatar>
+        }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
@@ -69,11 +74,9 @@ const PostDetail = (props) => {
         </Typography>
       </CardContent>
       
-      
      
       
     </Card>
-    </Grid>
     // <Grid padding='50px 200px'>
     //   <Grid>
     //     <Text bold size='20px'>{isPost?.title}</Text>

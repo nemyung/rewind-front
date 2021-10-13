@@ -29,10 +29,10 @@ const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 // MiddleWare
 export const loadPostsToAxios = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${baseURL}/posts`);
-    console.log(res);
-    // const postList = await axiosInstace.getPost();
-    // dispatch(loadPosts(postList.data));
+    // const res = await axios.get(`${baseURL}/posts`);
+    // console.log(res);
+    const postList = await axiosInstace.getPost();
+    dispatch(loadPosts(postList.data));
   } catch (e) {
     console.log(e);
   }
