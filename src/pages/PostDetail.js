@@ -2,13 +2,21 @@ import React from 'react';
 import isEqaul from 'lodash/isEqual';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { history } from '../features/configureStore';
-
-import { deletePostToAxios } from '../features/posts/actions';
 
 // import PropTypes from 'prop-types';
-import CommentForm from '../components/CommentForm';
-import CommentList from '../components/CommentList';
+
+// import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import CommentList from '../components/CommentList';
+// import CommentForm from '../components/CommentForm';
+import { Grid } from '../elements';
+import { deletePostToAxios } from '../features/posts/actions';
+import { history } from '../features/configureStore';
 
 // import PostEdit from './PostEdit';
 
@@ -40,33 +48,59 @@ const PostDetail = (props) => {
 
   console.log(isPost);
   return (
-    <>
-      <div style={{ display: 'flex' }}>
-        <p>{isPost?.title}</p>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <p>{isPost?.nickname}</p>
-        <p>{isPost?.insrtDt}</p>
-        {isMe && <button type="button" onClick = {moveToPostEdit}>수정</button>}
-        {isMe && <button type="button" onClick = {deletePost}>삭제</button>}
-      </div>
-      <div>
-        <p>{isPost?.contents}</p>
-      </div>
-      <div>
-        <p>댓글 {isPost?.commentCnt}개</p>
-      </div>
-      <div>
-        <CommentForm />
-        <CommentList />
-      </div>
-    </>
+    <Grid padding='50px 200px'>
+    <Card sx={{ Width: 600, height: 500 }}>
+      <CardHeader
+       
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title="Shrimp and Chorizo Paella"
+        subheader="September 14, 2016"
+      />
+
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          This impressive paella is a perfect party dish and a fun meal to cook
+          together with your guests. Add 1 cup of frozen peas along with the mussels,
+          if you like.
+        </Typography>
+      </CardContent>
+      
+      
+     
+      
+    </Card>
+    </Grid>
+    // <Grid padding='50px 200px'>
+    //   <Grid>
+    //     <Text bold size='20px'>{isPost?.title}</Text>
+    //   </Grid>
+    //   <div
+    //     style={{
+    //       display: 'flex',
+    //       alignItems: 'center',
+    //       justifyContent: 'space-between',
+    //     }}
+    //   >
+    //     <p>{isPost?.nickname}</p>
+    //     <p>{isPost?.insrtDt}</p>
+    //     {isMe && <button type="button" onClick = {moveToPostEdit}>수정</button>}
+    //     {isMe && <button type="button" onClick = {deletePost}>삭제</button>}
+    //   </div>
+    //   <div>
+    //     <p>{isPost?.contents}</p>
+    //   </div>
+    //   <div>
+    //     <p>댓글 {isPost?.commentCnt}개</p>
+    //   </div>
+    //   <Grid>
+    //     <CommentForm />
+    //     <CommentList />
+    //   </Grid>
+    // </Grid>
   );
 };
 

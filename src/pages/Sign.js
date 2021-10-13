@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Login from '../components/Login';
-import SignUp from '../components/SignUp';
+import SignUp from '../components/Signup';
 
 import bgSrc from '../assets/bg.jpg';
 
