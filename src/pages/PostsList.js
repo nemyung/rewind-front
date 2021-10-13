@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import isEqaul from 'lodash/isEqual';
 
@@ -20,6 +21,7 @@ import PostTitle from '../components/PostTitle';
 /* eslint-disable */
 const PostsList = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // 반환하는 값이 객체나 배열일 때 isEqaul
   // 모든 객체 랜더링이 아닌 특정 객체만 랜더링 됨
   const postList = useSelector((state) => state.posts, isEqaul);
@@ -31,31 +33,29 @@ const PostsList = () => {
     dispatch(loadPostsToAxios());
   }, []);
 
- 
-
- 
-
   return (
-    <Grid padding='50px 200px'>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650}} size='small' aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell sx={{width:'60px', }} align='center'>No.</StyledTableCell>
-              <StyledTableCell sx={{width:'500px', backgroundColor : 'blue'}} align='center'>글제목</StyledTableCell>
-              <StyledTableCell sx={{width:'120px', backgroundColor : 'green'}} align='center'>작성자</StyledTableCell>
-              <StyledTableCell sx={{width:'120px', backgroundColor : 'yellow'}} align='center'>작성시간</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          {postList.allIds.map((id, idx) => {
-        return <PostTitle key={id} id={id} idx={idx} />;
-      })}
-            
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <>
+      <Grid padding='50px 200px'>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650}} size='small' aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell sx={{width:'60px', }} align='center'>No.</StyledTableCell>
+                <StyledTableCell sx={{width:'500px', backgroundColor : 'blue'}} align='center'>글제목</StyledTableCell>
+                <StyledTableCell sx={{width:'120px', backgroundColor : 'green'}} align='center'>작성자</StyledTableCell>
+                <StyledTableCell sx={{width:'120px', backgroundColor : 'yellow'}} align='center'>작성시간</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+            {postList.allIds.map((id, idx) => {
+              return <PostTitle key={id} id={id} idx={idx} />;
+            })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <button onClick={() => history.push('/new')}>우석쿤</button>
       </Grid>
+    </>
   );
 };
 
