@@ -1,10 +1,18 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { history } from '../features/configureStore';
-import { updatePostToAxios } from '../features/posts/actions';
 
-// /* eslint-disable */
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+// import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { updatePostToAxios } from '../features/posts/actions';
+// import { history } from '../features/configureStore';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Grid } from '../elements';
+
+/* eslint-disable */
 
 const PostEdit = () => {
   const params = useParams();
@@ -42,7 +50,36 @@ const PostEdit = () => {
   };
 
   return (
-    <>
+    <Grid>
+      <Grid
+        width="80%"
+        padding="60px 20px 20px 20px"
+        margin="auto"
+        height="80%"
+      >
+        <Card sx={{ height: '100%' }}>
+          <Grid padding="0px 30px">
+            <Grid is_flex>
+              <CardHeader title={isPost?.title} subheader={toDay} />
+              {isPost?.nickname}
+            </Grid>
+          </Grid>
+          <hr style={{ width: '90%', margin: 'auto' }} />
+          <Grid padding="0px 30px">
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                {isPost?.contents}
+              </Typography>
+            </CardContent>
+          </Grid>
+        </Card>
+      </Grid>
+    </Grid>
+  );
+};
+
+{
+  /* <>
       <div>
         <label htmlFor="postTitle">
           제목
@@ -73,8 +110,7 @@ const PostEdit = () => {
           돌아가기
         </button>
       </div>
-    </>
-  );
-};
+    </> */
+}
 
 export default PostEdit;

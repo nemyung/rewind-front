@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
 
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 
@@ -31,7 +32,7 @@ const PostDetail = () => {
   const isCurrentPostLoaded = Boolean(Object.keys(currentPost).length);
 
   const authorEmail = currentPost?.author;
-  const createdAt = currentPost?.insertDt.split('T')[0];
+  const createdAt = currentPost?.insertDt?.split('T')[0];
   const isCurrentUserPost = authorEmail === currentUserEmail;
 
   const deletePost = async () => {
