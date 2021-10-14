@@ -13,11 +13,12 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
 
+import { deletePostToAxios } from '../features/posts/actions';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 
 import { Grid } from '../elements';
-import { deletePostToAxios } from '../features/posts/actions';
 
 const PostDetail = () => {
   const dispatch = useDispatch();

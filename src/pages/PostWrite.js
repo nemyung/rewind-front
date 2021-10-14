@@ -1,15 +1,30 @@
-/* eslint-disable no-alert */
+// /* eslint-disable no-alert */
 import React from 'react';
 // import { useDispatch } from 'react-redux';
-import { history } from '../features/configureStore';
+
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import TextField from '@mui/material/TextField';
 import T from '../api/tokenInstance';
+import { history } from '../features/configureStore';
+import { Grid } from '../elements';
+import MarkDownEditor from '../components/MarkDownEditor';
 // import { createPost } from '../features/posts/actions';
 
 const PostWrite = () => {
+  const toastRef = React.useRef(null);
+
   // const dispatch = useDispatch();
   const [title, setTitle] = React.useState('');
-  const [contents, setContents] = React.useState('');
+  const [contents, setContents] = React.useState({ contents: '' });
   const [category, setCategory] = React.useState('React');
+
+  const get = () => {
+    const getMarkDown = toastRef.current.getInstance().getMarkdown();
+    console.log(getMarkDown);
+    setContents(getMarkDown);
+  };
 
   const addPost = async () => {
     const { data } = await T.POST('/post', {
@@ -17,6 +32,8 @@ const PostWrite = () => {
       contents,
       category,
     });
+    console.log(data);
+
     console.log(data);
 
     // dispatch(createPost(data.data));
@@ -33,83 +50,104 @@ const PostWrite = () => {
   };
 
   return (
-    <>
-      <div>
-        <label htmlFor="postTitle">
-          제목
-          <input
-            id="postTitle"
-            value={title}
-            type="text"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
-        </label>
-        <label htmlFor="category">
-          <input
-            id="react"
-            name="react"
-            value="react"
-            type="radio"
-            checked={category === 'react'}
-            onChange={handleRadioChange}
-          />
-          React
-        </label>
-        <div>
-          <label htmlFor="category">
-            <input
-              id="NodeJS"
-              name="NodeJS"
-              value="NodeJS"
-              type="radio"
-              checked={category === 'NodeJS'}
-              onChange={handleRadioChange}
-            />
-            NodeJS
-          </label>
-          <label htmlFor="category">
-            <input
-              id="Spring"
-              name="Spring"
-              value="Spring"
-              type="radio"
-              checked={category === 'Spring'}
-              onChange={handleRadioChange}
-            />
-            Spring
-          </label>
-        </div>
-      </div>
-      <div>
-        <label htmlFor="postWrite">
-          게시글 내용
-          <textarea
-            id="postDesc"
-            value={contents}
-            placeholder="게시글 입력"
-            type="text"
-            onChange={(e) => {
-              setContents(e.target.value);
-            }}
-          />
-        </label>
-      </div>
-      <div>
-        <button type="button" onClick={addPost}>
-          작성완료
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            history.push('/');
-          }}
-        >
-          돌아가기
-        </button>
-      </div>
-    </>
+    <Grid>
+      <Grid
+        width="80%"
+        padding="60px 20px 20px 20px"
+        margin="auto"
+        height="80%"
+      >
+        <Card sx={{ height: '100%' }}>
+          <Grid padding="0px 30px">
+            <Grid is_flex>
+              <CardHeader title="게시글 작성" />
+            </Grid>
+          </Grid>
+          <hr style={{ width: '90%', margin: 'auto' }} />
+          <Grid padding="0px 30px">
+            <CardContent>
+              <Grid width="auto" margin="20px auto">
+                <TextField
+                  sx={{ width: '100%' }}
+                  label="게시글 제목"
+                  id="postTitle"
+                  value={title}
+                  type="text"
+                  variant="outlined"
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                />
+
+                <Grid margin="20px auto">
+                  <label style={{ margin: '0px 10px' }} htmlFor="category">
+                    <input
+                      id="react"
+                      name="react"
+                      value="react"
+                      type="radio"
+                      checked={category === 'react'}
+                      onChange={handleRadioChange}
+                    />
+                    React
+                  </label>
+                  <label style={{ margin: '0px 10px' }} htmlFor="category">
+                    <input
+                      id="NodeJS"
+                      name="NodeJS"
+                      value="NodeJS"
+                      type="radio"
+                      checked={category === 'NodeJS'}
+                      onChange={handleRadioChange}
+                    />
+                    NodeJS
+                  </label>
+                  <label style={{ margin: '0px 10px' }} htmlFor="category">
+                    <input
+                      id="Spring"
+                      name="Spring"
+                      value="Spring"
+                      type="radio"
+                      checked={category === 'Spring'}
+                      onChange={handleRadioChange}
+                    />
+                    Spring
+                  </label>
+                </Grid>
+              </Grid>
+              <Grid margin="50px auto">
+                <MarkDownEditor function={get} />
+                <TextField
+                  label="게시글 내용"
+                  id="postDesc"
+                  value={contents}
+                  multiline
+                  maxRows={4}
+                  placeholder="게시글 입력"
+                  type="text"
+                  onChange={(e) => {
+                    setContents(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid>
+                <button type="button" onClick={addPost}>
+                  작성완료
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    history.push('/');
+                  }}
+                >
+                  돌아가기
+                </button>
+              </Grid>
+            </CardContent>
+          </Grid>
+        </Card>
+      </Grid>
+    </Grid>
   );
 };
 
