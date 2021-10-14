@@ -45,6 +45,17 @@ export const loadPostsToAxios = () => async (dispatch) => {
   }
 };
 
+export const loadOnePostToAxios = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${baseURL}/post/${postId}`);
+    console.log(res);
+    // const postList = await axiosInstace.getPost();
+    dispatch(loadPosts([res.data]));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const createPostToAxios = (post) => async (dispatch) => {
   try {
     console.log(post);

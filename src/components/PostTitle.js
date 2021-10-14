@@ -35,7 +35,7 @@ const PostTitle = ({ id = '', idx = '' }) => {
 };
 
 PostTitle.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   idx: PropTypes.number.isRequired,
 };
 
