@@ -68,11 +68,11 @@ export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
 export const createPostToAxios = (post) => async (dispatch) => {
   try {
     console.log(post);
-    const res = await T.POST('/posts/new', post);
+    const res = await T.POST('/post', post);
     console.log(res);
     // 현재 response는 success 밖에 없음
 
-    dispatch(createPost(post));
+    dispatch(createPost(res.data.post));
   } catch (e) {
     console.log(e);
   }

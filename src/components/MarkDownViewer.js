@@ -5,9 +5,11 @@ import React from 'react';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer } from '@toast-ui/react-editor';
 
-const MarkDownViewer = ({ option }) => {
+const MarkDownViewer = ({ option, content }) => {
+
+    console.log(content)
   const viewerOpt = {
-    initialValue: '> 뷰어 동작 하냐?',
+    initialValue: content,
     ...option,
   };
 
