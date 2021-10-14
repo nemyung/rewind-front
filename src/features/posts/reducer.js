@@ -31,7 +31,10 @@ export default function postsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_POST_LIST: {
+        console.log(action.payload);
         action.payload.forEach((document) => {
+          console.log(document);
+
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
         });

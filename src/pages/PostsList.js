@@ -41,15 +41,15 @@ const PostsList = () => {
           <Table sx={{ minWidth: 650}} size='small' aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell sx={{width:'60px', }} align='center'>No.</StyledTableCell>
+                <StyledTableCell sx={{width:'60px', }} align='center'>Cat.</StyledTableCell>
                 <StyledTableCell sx={{width:'500px', backgroundColor : 'blue'}} align='center'>글제목</StyledTableCell>
                 <StyledTableCell sx={{width:'120px', backgroundColor : 'green'}} align='center'>작성자</StyledTableCell>
                 <StyledTableCell sx={{width:'120px', backgroundColor : 'yellow'}} align='center'>작성시간</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-            {postList.allIds.map((id, idx) => {
-              return <PostTitle key={id} id={id} idx={idx} />;
+            {postList.allIds.map((id) => {
+              return <PostTitle key={id} id={id}/>;
             })}
             </TableBody>
           </Table>

@@ -8,9 +8,11 @@ import { history } from '../features/configureStore';
 
 // import { Grid, Text } from '../elements/index';
 
-const PostTitle = ({ id = '', idx = '' }) => {
+const PostTitle = ({ id = '' }) => {
   const title = useSelector((state) => state.posts.byId);
   const toDay = title[id].insertDt.split('T')[0];
+
+  console.log(title[id].category);
 
   const moveToPostDetail = () => {
     history.push(`/post/${id}`);
@@ -22,7 +24,7 @@ const PostTitle = ({ id = '', idx = '' }) => {
         key={id}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
-        <TableCell align="center">{idx}</TableCell>
+        <TableCell align="center">{title[id].category}</TableCell>
         <TableCell onClick={moveToPostDetail} align="left">
           {title[id].title}
         </TableCell>
@@ -36,7 +38,6 @@ const PostTitle = ({ id = '', idx = '' }) => {
 
 PostTitle.propTypes = {
   id: PropTypes.number.isRequired,
-  idx: PropTypes.number.isRequired,
 };
 
 export default PostTitle;
