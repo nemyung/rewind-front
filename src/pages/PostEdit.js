@@ -1,13 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
+import TextField from '@mui/material/TextField';
+import MarkDownEditor from '../components/MarkDownEditor';
+
 // import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { updatePostToAxios } from '../features/posts/actions';
+// import { updatePostToAxios } from '../features/posts/actions';
 // import { history } from '../features/configureStore';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Grid } from '../elements';
@@ -16,38 +18,46 @@ import { Grid } from '../elements';
 
 const PostEdit = () => {
   const params = useParams();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [updateTitle, setUpdateTitle] = React.useState('');
-  const [updateContents, setUpdateContents] = React.useState('');
+  // const [updateContents, setUpdateContents] = React.useState('');
+  const [category, setCategory] = React.useState('React');
 
-  const editPost = () => {
-    // postid, contents
-    dispatch(
-      // 로컬 테스트
-      // updatePostToAxios(params.id, {
-      //   title: updateTitle,
-      //   contents: updateContents,
-      // }),
+  const currentPost = useSelector(state => state.posts.byId[params.id])
 
-      // 명세 된 형식으로 보냄.
-      updatePostToAxios({
-        id: params.id,
-        title: updateTitle,
-        contents: updateContents,
-      }),
-    );
-    console.log(params);
-    console.log(updateTitle);
-    console.log(updateContents);
+  console.log(currentPost)
+  const handleRadioChange = (event) => {
+    setCategory(event.target.value);
   };
+
+  // const editPost = () => {
+  //   // postid, contents
+  //   dispatch(
+  //     // 로컬 테스트
+  //     // updatePostToAxios(params.id, {
+  //     //   title: updateTitle,
+  //     //   contents: updateContents,
+  //     // }),
+
+  //     // 명세 된 형식으로 보냄.
+  //     updatePostToAxios({
+  //       id: params.id,
+  //       title: updateTitle,
+  //       contents: updateContents,
+  //     }),
+  //   );
+  //   console.log(params);
+  //   console.log(updateTitle);
+  //   console.log(updateContents);
+  // };
 
   const editTitle = (e) => {
     setUpdateTitle(e.target.value);
   };
 
-  const editContents = (e) => {
-    setUpdateContents(e.target.value);
-  };
+  // const editContents = (e) => {
+  //   setUpdateContents(e.target.value);
+  // };
 
   return (
     <Grid>
@@ -60,16 +70,61 @@ const PostEdit = () => {
         <Card sx={{ height: '100%' }}>
           <Grid padding="0px 30px">
             <Grid is_flex>
-              <CardHeader title={isPost?.title} subheader={toDay} />
-              {isPost?.nickname}
+              <CardHeader title="게시글 작성" />
             </Grid>
           </Grid>
           <hr style={{ width: '90%', margin: 'auto' }} />
           <Grid padding="0px 30px">
             <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {isPost?.contents}
-              </Typography>
+              <Grid width="auto" margin="20px auto">
+                <TextField
+                  sx={{ width: '100%' }}
+                  label="게시글 제목"
+                  id="postTitle"
+                  defaultValue={currentPost.title}
+                  type="text"
+                  variant="outlined"
+                  onChange={editTitle}
+                />
+                <Grid margin="20px auto">
+                  <label style={{ margin: '0px 10px' }} htmlFor="category">
+                    <input
+                      id="React"
+                      name="React"
+                      value="React"
+                      type="radio"
+                      checked={category === 'React'}
+                      onChange={handleRadioChange}
+                    />
+                    &nbsp;React
+                  </label>
+                  <label style={{ margin: '0px 10px' }} htmlFor="category">
+                    <input
+                      id="NodeJS"
+                      name="NodeJS"
+                      value="NodeJS"
+                      type="radio"
+                      checked={category === 'NodeJS'}
+                      onChange={handleRadioChange}
+                    />
+                    &nbsp;NodeJS
+                  </label>
+                  <label style={{ margin: '0px 10px' }} htmlFor="category">
+                    <input
+                      id="Spring"
+                      name="Spring"
+                      value="Spring"
+                      type="radio"
+                      checked={category === 'Spring'}
+                      onChange={handleRadioChange}
+                    />
+                    &nbsp;Spring
+                  </label>
+                </Grid>
+              </Grid>
+              <Grid margin="50px auto">
+                <MarkDownEditor category={category} title={updateTitle} currentContent = {currentPost.Content}  />
+              </Grid>
             </CardContent>
           </Grid>
         </Card>
@@ -77,40 +132,5 @@ const PostEdit = () => {
     </Grid>
   );
 };
-
-{
-  /* <>
-      <div>
-        <label htmlFor="postTitle">
-          제목
-          <input id="postTitle" type="text" onChange={editTitle} />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="postWrite">
-          게시글 내용
-          <textarea
-            id="postDesc"
-            placeholder="게시글 입력"
-            type="text"
-            onChange={editContents}
-          />
-        </label>
-      </div>
-      <div>
-        <button type="button" onClick={editPost}>
-          작성완료
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            history.push('/');
-          }}
-        >
-          돌아가기
-        </button>
-      </div>
-    </> */
-}
 
 export default PostEdit;

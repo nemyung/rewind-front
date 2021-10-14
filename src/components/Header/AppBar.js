@@ -109,7 +109,14 @@ const TopNevigation = ({ status }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            onClick={() => {
+              history.push('/');
+            }}
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
             REWIND, REMIND
           </Typography>
           <Button color="inherit" onClick={status ? handleLogout : handleLogin}>
