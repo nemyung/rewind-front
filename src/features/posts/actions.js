@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import {
+  CHANGE_CATEGORY,
   LOAD_POST_LIST,
   LOAD_CURRENT_POST,
   CREATE,
@@ -15,10 +16,17 @@ import axiosInstace from '../../api/axiosInstace';
 import T from '../../api/tokenInstance';
 
 // ActionCreator
+
+export const changeCategory = (category) => ({
+  type: CHANGE_CATEGORY,
+  payload: category,
+});
+
 export const loadPosts = (postList) => ({
   type: LOAD_POST_LIST,
   payload: postList,
 });
+
 export const loadCurrentPost = (postId, data) => ({
   type: LOAD_CURRENT_POST,
   payload: { postId, data },
@@ -44,6 +52,11 @@ export const addCommentToPost = (addedComment) => ({
   payload: addedComment,
 });
 
+export const modifyCommentToPost = (commentId, newComment) => ({
+  type: MODIFY_COMMENT,
+  payload: { commentId, newComment },
+});
+
 export const removeCommentToPost = (commentId) => ({
   type: REMOVE_COMMENT,
   payload: commentId,
@@ -59,8 +72,8 @@ export const loadPostsToAxios = () => async (dispatch) => {
         posts: { content },
       },
     } = res;
-    // console.log(posts);
-    // const postList = await axiosInstace.getPost();
+    console.log('response: ', res);
+
     dispatch(loadPosts(content));
   } catch (e) {
     console.log(e);
@@ -71,7 +84,7 @@ export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
   try {
     const { data } = await T.GET(`/post/${postId}`);
     console.log(data);
-    dispatch(loadCurrentPost(postId, data));
+    dispatch(loadCurrentPost(Number(postId), data));
   } catch (error) {
     console.error(error);
   }
@@ -135,14 +148,10 @@ export const addCommentToAxios = (postId, comment) => async (dispatch) => {
 
   try {
     const { data } = await T.POST('/comment', { postId, comment });
-    // console.log('CommentToAxiosLogging Start');
-    // console.log(data);
-    // console.log('CommentToAxiosLogging End');
     addedComment = data;
   } catch (error) {
     console.error(error);
   }
-  console.log(addedComment);
   dispatch(addCommentToPost(addedComment));
 };
 
@@ -150,8 +159,10 @@ export const modifyCommentToAxios =
   (commentId, updatedComment) => async (dispatch) => {
     const payload = { id: commentId, comment: updatedComment };
     try {
-      const res = await T.UPDATE('/comment', commentId, payload);
-      console.log(res);
+      const { data } = await T.UPDATE('/comment', commentId, payload);
+      if (data.result === 'success') {
+        dispatch(modifyCommentToPost(commentId, data.comment));
+      }
     } catch (error) {
       console.error(error);
     }

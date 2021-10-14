@@ -1,3 +1,4 @@
+export const CHANGE_CATEGORY = 'posts/CHANGE_CATEGORY';
 export const LOAD_POST_LIST = 'posts/LOAD_POST_LIST';
 export const LOAD_CURRENT_POST = 'posts/LOAD_CURRENT_POST';
 export const CREATE = 'posts/CREATE';

@@ -1,13 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-// import Divider from '@mui/material/Divider';
+
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
@@ -17,7 +18,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { SwipeableDrawer } from '@mui/material';
 
 import { logOut } from '../../features/user/actions';
+import { loadPosts, changeCategory } from '../../features/posts/actions';
 import { removeToken } from '../../utils/auth';
+
+const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
 const TopNevigation = ({ status }) => {
   const [isToggleOpen, setIsToggleOpen] = React.useState(false);
@@ -31,6 +35,7 @@ const TopNevigation = ({ status }) => {
     dispatch(logOut());
     history.replace('/sign');
   };
+  const currentCategory = useSelector((state) => state.posts.category);
 
   const category = ['React', 'Node', 'Spring'];
 
@@ -46,9 +51,19 @@ const TopNevigation = ({ status }) => {
     setIsToggleOpen(open);
   };
 
-  const handleButtonClick = (language) => {
-    // 필터링해서 보여주는 axios 만들어야 한다.
-    console.log(language);
+  const handleButtonClick = async (language) => {
+    const upperCase = language.toUpperCase();
+    if (currentCategory === upperCase) {
+      return;
+    }
+
+    const {
+      data: { posts },
+    } = await axios.get(`${baseURL}/posts/${upperCase}/0`);
+    const { content } = posts;
+
+    dispatch(loadPosts(content));
+    dispatch(changeCategory(upperCase));
   };
 
   const list = () => (

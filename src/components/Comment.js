@@ -39,9 +39,10 @@ const Comment = ({ id }) => {
   const isCurrentUserComment = currentUserNickname === comment.nickname;
 
   const md = comment.insertDt.split('T')[0];
-
   const handleModifyInputButtonClick = () => {
     dispatch(modifyCommentToAxios(comment.id, modifiedComment));
+    handleClose();
+    setModifiedComment('');
   };
   const handleDeleteButtonClick = () => {
     dispatch(removeCommentToAxios(comment.id));
@@ -93,7 +94,6 @@ const Comment = ({ id }) => {
                 }}
               >
                 <Paper
-                  variant={8}
                   sx={{
                     width: '100%',
                     height: '20%',

@@ -24,8 +24,6 @@ export default function useUserAuthentication() {
 
   const dispatch = useDispatch();
   const token = getToken();
-  console.log(token);
-  console.log(isUserAuthorized);
 
   React.useEffect(() => {
     if (!token || isUserAuthorized) {

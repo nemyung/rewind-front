@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer';
 import {
+  CHANGE_CATEGORY,
   LOAD_POST_LIST,
   CREATE,
   DELETE,
   UPDATE,
   ADD_COMMENT,
   LOAD_CURRENT_POST,
+  MODIFY_COMMENT,
   REMOVE_COMMENT,
 } from './types';
 
@@ -14,6 +16,7 @@ const initialState = {
   byId: {},
   allIds: [],
   current: {},
+  category: 'ALL',
 };
 
 /*
@@ -30,11 +33,16 @@ const initialState = {
 export default function postsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
+      case CHANGE_CATEGORY: {
+        draft.category = action.payload;
+        break;
+      }
       case LOAD_POST_LIST: {
         console.log(action.payload);
+        draft.byId = {};
+        draft.allIds = [];
         action.payload.forEach((document) => {
           console.log(document);
-
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
         });
@@ -76,11 +84,18 @@ export default function postsReducer(state = initialState, action) {
         draft.current.comments.unshift(action.payload);
         break;
       }
+      case MODIFY_COMMENT: {
+        const { commentId, newComment } = action.payload;
+        const index = draft.current.comments.findIndex(
+          (c) => c.id === commentId,
+        );
+        draft.current.comments[index] = newComment;
+        break;
+      }
       case REMOVE_COMMENT: {
         const index = draft.current.comments.findIndex(
-          (c) => c === action.payload,
+          (c) => c.id === action.payload,
         );
-        console.log(index);
         draft.current.comments.splice(index, 1);
         break;
       }
