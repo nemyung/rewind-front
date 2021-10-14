@@ -36,28 +36,18 @@ const MOCK_UP = [
 
 // TODOS: SORT COMMENT LIST
 // TODOS: OPTIMIZATION
-const CommentList = ({ id }) => {
-  const comments = useSelector(
-    (state) => state.posts.byId[id]?.comments,
-    isEqual,
-  );
+const CommentList = () => {
+  const commentIdList = useSelector((state) => {
+    const comments = state.posts.current?.comments;
+    const ids = comments.map((comment) => comment.id);
+    return ids;
+  }, isEqual);
 
-  // if (!comments?.length) {
-  //   return null;
-  // }
+  if (!commentIdList.length) {
+    return null;
+  }
 
-  // id인지 commentId인지 체크해야 할 필요성 생김
-  // return comments.map((comment) => (
-  //   <Comment key={comment.id} id={comment.id} />
-  // ));
-
-  return MOCK_UP.slice().map((comment) => (
-    <Comment key={comment.id} comment={comment} />
-  ));
-};
-
-CommentList.propTypes = {
-  id: PropTypes.string.isRequired,
+  return commentIdList.map((id) => <Comment key={id} id={id} />);
 };
 
 export default CommentList;

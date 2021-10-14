@@ -1,13 +1,24 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
-import { LOAD, CREATE, DELETE, UPDATE, ADD_COMMENT } from './types';
+import {
+  LOAD_POST_LIST,
+  CREATE,
+  DELETE,
+  UPDATE,
+  ADD_COMMENT,
+  LOAD_CURRENT_POST,
+} from './types';
 import axiosInstace from '../../api/axiosInstace';
 import T from '../../api/tokenInstance';
 
 // ActionCreator
 export const loadPosts = (postList) => ({
-  type: LOAD,
+  type: LOAD_POST_LIST,
   payload: postList,
+});
+export const loadCurrentPost = (postId, data) => ({
+  type: LOAD_CURRENT_POST,
+  payload: { postId, data },
 });
 
 export const createPost = (newPost) => ({
@@ -31,7 +42,7 @@ export const addCommentToPost = (postId, addedCommnet) => ({
 });
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
-// MiddleWare
+
 export const loadPostsToAxios = () => async (dispatch) => {
   try {
     const res = await axios.get(`${baseURL}/posts`);
@@ -45,14 +56,12 @@ export const loadPostsToAxios = () => async (dispatch) => {
   }
 };
 
-export const loadOnePostToAxios = (postId) => async (dispatch) => {
+export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
   try {
-    const res = await axios.get(`${baseURL}/post/${postId}`);
-    console.log(res);
-    // const postList = await axiosInstace.getPost();
-    dispatch(loadPosts([res.data]));
-  } catch (e) {
-    console.log(e);
+    const { data } = await T.GET(`/post/${postId}`);
+    dispatch(loadCurrentPost(postId, data));
+  } catch (error) {
+    console.error(error);
   }
 };
 
