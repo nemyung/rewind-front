@@ -6,13 +6,9 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import { history } from '../features/configureStore';
 
-// import { Grid, Text } from '../elements/index';
-
 const PostTitle = ({ id = '' }) => {
   const title = useSelector((state) => state.posts.byId);
   const toDay = title[id].insertDt.split('T')[0];
-
-  console.log(title[id].category);
 
   const moveToPostDetail = () => {
     history.push(`/post/${id}`);

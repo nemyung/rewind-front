@@ -25,6 +25,7 @@ const PostsList = () => {
   // 반환하는 값이 객체나 배열일 때 isEqaul
   // 모든 객체 랜더링이 아닌 특정 객체만 랜더링 됨
   const postList = useSelector((state) => state.posts, isEqaul);
+  console.log(postList);
 
   React.useEffect(() => {
     if (postList.allIds.length !== 0) {
