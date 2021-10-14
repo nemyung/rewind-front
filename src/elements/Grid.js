@@ -43,7 +43,7 @@ Grid.defaultProps = {
   width: '100%',
   padding: false,
   margin: false,
-  height : false,
+  height : null,
   bg: false,
   center: false,
   maxheight: false,

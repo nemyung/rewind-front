@@ -19,7 +19,7 @@ import { history } from '../features/configureStore';
 import { Grid } from '../elements';
 
 // import { uploadFile } from '../shared/uploadFile';
-// import '../themes/toastEditor.css';
+import '../styles/toastEditor.css';
 
 const MarkDownEditor = ({ option, category, title }) => {
     const dispatch = useDispatch()

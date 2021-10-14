@@ -9,7 +9,6 @@ import MarkDownEditor from '../components/MarkDownEditor';
 
 const PostWrite = () => {
   const [title, setTitle] = React.useState('');
-  const [contents, setContents] = React.useState({ contents: '' });
   const [category, setCategory] = React.useState('React');
 
   const handleRadioChange = (event) => {
@@ -38,7 +37,6 @@ const PostWrite = () => {
                   sx={{ width: '100%' }}
                   label="게시글 제목"
                   id="postTitle"
-                  value={title}
                   type="text"
                   variant="outlined"
                   onChange={(e) => {
@@ -83,12 +81,6 @@ const PostWrite = () => {
               </Grid>
               <Grid margin="50px auto">
                 <MarkDownEditor category={category} title={title} />
-                <TextField
-                  label="게시글 내용"
-                  id="postDesc"
-                  value={contents}
-                  onChange={(e) => setContents(e.target.value)}
-                />
               </Grid>
             </CardContent>
           </Grid>
