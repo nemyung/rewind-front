@@ -22,8 +22,6 @@ export default function postsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD: {
-        console.log('LOAD');
-        console.log(action.payload);
         action.payload.forEach((document) => {
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
@@ -51,7 +49,9 @@ export default function postsReducer(state = initialState, action) {
       }
       case DELETE: {
         delete draft.byId[action.payload];
-        draft.allIds = draft.allIds.filter((id) => id !== action.payload);
+        draft.allIds = draft.allIds.filter(
+          (id) => id !== Number(action.payload),
+        );
         break;
       }
       case ADD_COMMENT: {

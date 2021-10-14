@@ -13,10 +13,8 @@ const PostTitle = ({ id = '', idx = '' }) => {
   const toDay = title[id].insertDt.split('T')[0];
 
   const moveToPostDetail = () => {
-    history.push(`/detail/${id}`);
+    history.push(`/post/${id}`);
   };
-
-  console.log(id, idx);
 
   return (
     <>
@@ -32,25 +30,6 @@ const PostTitle = ({ id = '', idx = '' }) => {
         {/* <TableCell align="left">{title[id].insertDt}</TableCell> */}
         <TableCell align="center">{toDay}</TableCell>
       </TableRow>
-
-      {/* <Grid bg="#EEE" is_flex width="80%" padding="0px 60px" margin="50px auto">
-        <Grid bg="red" width="150px" margin="0px 30px">
-          <Text>{idx}</Text>
-        </Grid>
-        eslint-disable
-        솔직히 온클릭 잡는건 과하다 생각합니다.
-        <Grid bg="blue" margin="0px 30px" _onClick = {moveToPostDetail}>
-          <Text>{title[id].title}</Text>
-        </Grid>
-        <Grid>
-        <Grid bg="green">
-          <Text>{title[id].nickname}</Text>
-        </Grid>
-        <Grid>
-          <Text bg="blue">{title[id].insertDt}</Text>
-        </Grid>
-        </Grid>
-      </Grid> */}
     </>
   );
 };

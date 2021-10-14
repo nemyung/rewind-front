@@ -9,6 +9,11 @@ import PropTypes from 'prop-types';
 //   commentId: comment unique id
 // }
 
+// {
+//   /* <Typography variant="body2" color="text.secondary">
+// </Typography> */
+// }
+
 const Comment = ({ comment }) => {
   return (
     <div>

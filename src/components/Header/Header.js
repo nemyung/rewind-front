@@ -5,8 +5,6 @@ import AppBar from './AppBar';
 
 const Header = () => {
   const isUserLogin = useSelector((state) => Boolean(state.user.email));
-  console.log(isUserLogin);
-
   return <AppBar status={isUserLogin} />;
 };
 

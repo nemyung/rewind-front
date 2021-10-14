@@ -1,4 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import { useSelector } from 'react-redux';
+import isEqual from 'lodash/isEqual';
+import PropTypes from 'prop-types';
+
 import Comment from './Comment';
 
 // will use prop ids?
@@ -30,14 +35,29 @@ const MOCK_UP = [
 ];
 
 // TODOS: SORT COMMENT LIST
-const CommentList = () => {
+// TODOS: OPTIMIZATION
+const CommentList = ({ id }) => {
+  const comments = useSelector(
+    (state) => state.posts.byId[id]?.comments,
+    isEqual,
+  );
+
+  // if (!comments?.length) {
+  //   return null;
+  // }
+
+  // id인지 commentId인지 체크해야 할 필요성 생김
+  // return comments.map((comment) => (
+  //   <Comment key={comment.id} id={comment.id} />
+  // ));
+
   return MOCK_UP.slice().map((comment) => (
     <Comment key={comment.id} comment={comment} />
   ));
 };
 
-// CommentList.propTypes = {
-//   ids: PropTypes.arrayOf(PropTypes.number).isRequired,
-// };
+CommentList.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default CommentList;

@@ -35,9 +35,11 @@ const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 export const loadPostsToAxios = () => async (dispatch) => {
   try {
     const res = await axios.get(`${baseURL}/posts`);
-    console.log(res);
+    const {
+      data: { posts },
+    } = res;
     // const postList = await axiosInstace.getPost();
-    dispatch(loadPosts(res.data.posts));
+    dispatch(loadPosts(posts));
   } catch (e) {
     console.log(e);
   }
@@ -86,11 +88,28 @@ export const updatePostToAxios =
 
 export const deletePostToAxios = (postId) => async (dispatch) => {
   try {
-    await T.DELETE('/posts', postId);
+    console.log('deletePostToAxiosLogging Start');
+    const res = await T.DELETE('/post', postId);
+    console.log(res);
+    console.log('deletePostToAxiosLogging End');
     dispatch(deletePost(postId));
   } catch (error) {
     console.error(error);
   }
 };
 
-// export const addCommentToAxios = (postId) => async (dispatch) => {};
+export const addCommentToAxios = (postId, comment) => async (dispatch) => {
+  let addedComment;
+
+  try {
+    const { data } = await T.POST('/comment', { postId, comment });
+    console.log('CommentToAxiosLogging Start');
+    console.log(data);
+    console.log('CommentToAxiosLogging End');
+    addedComment = data;
+  } catch (error) {
+    console.error(error);
+  }
+
+  dispatch(addCommentToPost(postId, addedComment));
+};

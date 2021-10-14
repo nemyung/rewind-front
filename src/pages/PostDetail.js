@@ -1,137 +1,93 @@
 import React from 'react';
 import isEqaul from 'lodash/isEqual';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
-// import PropTypes from 'prop-types';
-
-// import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-// import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Container from '@mui/material/Container';
+
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
+
 import { Grid } from '../elements';
 import { deletePostToAxios } from '../features/posts/actions';
-import { history } from '../features/configureStore';
 
-// import PostEdit from './PostEdit';
-
-/* eslint-disable */
-
-const PostDetail = (props) => {
-  const { userEmail, email } = props;
+const PostDetail = () => {
   const dispatch = useDispatch();
-  const params = useParams();
-  const postList = useSelector((state) => state.posts.byId, isEqaul);
-  const isPost = postList[params.id];
-  // 서버 연결 시 주석 제거
-  const toDay = isPost?.insertDt.split('T')[0];
-  // const userInfo = useSelector((state) => state.user.email);
+  const history = useHistory();
+  const { id: postId } = useParams();
+  const post = useSelector((state) => state.posts.byId[postId], isEqaul);
+  const currentUserEmail = useSelector((state) => state.user.email);
+  const authorEmail = post?.author;
+  const createdAt = post?.insertDt.split('T')[0];
+  const isCurrentUserPost = authorEmail === currentUserEmail;
 
-  // const isMe = userInfo === isPost.email;
-  const isMe = userEmail === email;
-
-  const moveToPostEdit = () => {
-    history.push(`/edit/${props.match.params.id}`);
+  const deletePost = async () => {
+    try {
+      await dispatch(deletePostToAxios(postId));
+      history.replace('/');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const deletePost = () => {
-    dispatch(deletePostToAxios(params.id));
-    history.push(`/edit/${props.match.params.id}`);
-  };
-
-  console.log(isMe);
-
-  console.log(isPost);
   return (
-    <Grid main width="100%" height="100%" bg="#FEF9EF">
-      <Grid
-        width="80%"
-        
-        padding="60px 20px 20px 20px"
-        margin="auto"
-        height="80%"
+    <Grid main width="100%" height="100%">
+      <Container
+        maxWidth="md"
+        sx={{ padding: '60px 20px 20px 20px', width: '80%' }}
       >
-        <Card sx={{ height: '100%' }}>
+        <Card component="article" square>
           <Grid padding="0px 30px">
-            <Grid is_flex>
-              <CardHeader title={isPost?.title} subheader={toDay} />
-              {isMe && (
-                <button type="button" onClick={deletePost}>
-                  삭제
-                </button>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Stack direction="row" alignItems="center">
+                <CardHeader
+                  title={post?.title}
+                  subheader={createdAt}
+                  sx={{ mr: 2 }}
+                />
+                <Typography>{post?.nickname}</Typography>
+              </Stack>
+              {isCurrentUserPost && (
+                <ButtonGroup
+                  variant="text"
+                  aria-label="current user button group"
+                >
+                  <Button onClick={() => history.push(`/post/${postId}/edit`)}>
+                    수정
+                  </Button>
+                  <Button onClick={deletePost}>삭제</Button>
+                </ButtonGroup>
               )}
-              {isMe && (
-                <button type="button" onClick={moveToPostEdit}>
-                  수정
-                </button>
-              )}
-              {isPost?.nickname}
-            </Grid>
-          </Grid>
-          <hr style={{ width: '90%', margin: 'auto' }} />
-          <Grid padding="0px 30px">
-            <CardContent>
+            </Stack>
+            <Divider />
+            <CardContent sx={{ minHeight: '300px' }}>
               <Typography variant="body2" color="text.secondary">
-                <Grid >{isPost?.contents}</Grid>
+                {post?.contents}
               </Typography>
+            </CardContent>
+            <Divider />
+            <CardContent>
+              <Grid>
+                <CommentForm id={postId} />
+                <CommentList id={postId} />
+              </Grid>
             </CardContent>
           </Grid>
         </Card>
-      </Grid>
-      <Grid width="80%"
-        
-        padding="20px 20px 20px 20px"
-        margin="auto"
-        height="50%">
-      <Card sx={{ height: '100%' }}>
-          <Grid padding="0px 30px">
-            <Grid is_flex>
-              <CardHeader title= 'COMMENT' />
-            </Grid>
-          </Grid>
-          <hr style={{ width: '90%', margin: 'auto'}} />
-          <Grid padding="0px 30px">
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                <Grid>
-                <CommentForm/>
-                <CommentList/>
-                  </Grid>
-              </Typography>
-            </CardContent>
-          </Grid>
-        </Card>
-        </Grid>
+      </Container>
     </Grid>
-    // <Grid padding='50px 200px'>
-    //   <Grid>
-    //     <Text bold size='20px'>{isPost?.title}</Text>
-    //   </Grid>
-    //   <div
-    //     style={{
-    //       display: 'flex',
-    //       alignItems: 'center',
-    //       justifyContent: 'space-between',
-    //     }}
-    //   >
-    //     <p>{isPost?.nickname}</p>
-    //     <p>{isPost?.insrtDt}</p>
-    //     {isMe && <button type="button" onClick = {moveToPostEdit}>수정</button>}
-    //     {isMe && <button type="button" onClick = {deletePost}>삭제</button>}
-    //   </div>
-    //   <div>
-    //     <p>{isPost?.contents}</p>
-    //   </div>
-    //   <div>
-    //     <p>댓글 {isPost?.commentCnt}개</p>
-    //   </div>
-    
-    // </Grid>
   );
 };
 
