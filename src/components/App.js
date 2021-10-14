@@ -9,7 +9,10 @@ import PostEdit from '../pages/PostEdit';
 import PostDetail from '../pages/PostDetail';
 import Permit from './Permit';
 
+import { useUserAuthentication } from '../hooks';
+
 function App() {
+  useUserAuthentication();
   return (
     <Switch>
       <Route exact path="/sign">

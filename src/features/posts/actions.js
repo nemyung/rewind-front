@@ -35,7 +35,6 @@ const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 export const loadPostsToAxios = () => async (dispatch) => {
   try {
     const res = await axios.get(`${baseURL}/posts`);
-    console.log(res);
     const {
       data: { posts },
     } = res;

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
-import { LOGIN, LOG_OUT } from './types';
-import { removeToken } from '../../utils/auth';
+import { LOGIN, LOG_OUT, AUTHORIZED } from './types';
+// import { removeToken } from '../../utils/auth';
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
@@ -11,6 +11,11 @@ const login = (payload) => ({
 });
 
 const logOut = () => ({ type: LOG_OUT });
+
+const authorize = (email, nickname) => ({
+  type: AUTHORIZED,
+  payload: { email, nickname },
+});
 
 const loginToServer = (email, pw) => async (dispatch) => {
   try {
@@ -32,4 +37,4 @@ const loginToServer = (email, pw) => async (dispatch) => {
   }
 };
 
-export { logOut, loginToServer };
+export { logOut, loginToServer, authorize };

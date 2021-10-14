@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer';
-import { LOGIN, LOG_OUT } from './types';
+import { LOGIN, LOG_OUT, AUTHORIZED } from './types';
 
 const initialState = {
   email: '',
@@ -11,7 +11,8 @@ const initialState = {
 export default function userReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
-      case LOGIN: {
+      case LOGIN:
+      case AUTHORIZED: {
         draft.email = action.payload.email;
         draft.nickname = action.payload.nickname;
         draft.isAuthorized = true;
