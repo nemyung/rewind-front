@@ -14,6 +14,7 @@ const CommentForm = ({ id }) => {
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     dispatch(addCommentToAxios(id, comment));
+    setComment('');
   };
 
   return (

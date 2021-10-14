@@ -1,48 +1,16 @@
-// /* eslint-disable no-alert */
 import React from 'react';
-// import { useDispatch } from 'react-redux';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
-import T from '../api/tokenInstance';
-import { history } from '../features/configureStore';
 import { Grid } from '../elements';
-// import { createPost } from '../features/posts/actions';
+import MarkDownEditor from '../components/MarkDownEditor';
 
 const PostWrite = () => {
-  // const toastRef = React.useRef(null);
-
-  // const dispatch = useDispatch();
   const [title, setTitle] = React.useState('');
   const [contents, setContents] = React.useState({ contents: '' });
   const [category, setCategory] = React.useState('React');
-
-  // const get = () => {
-  //   const getMarkDown = toastRef.current.getInstance().getMarkdown();
-  //   console.log(getMarkDown);
-  //   setContents(getMarkDown);
-  // };
-
-  const addPost = async () => {
-    const { data } = await T.POST('/post', {
-      title,
-      contents,
-      category,
-    });
-    console.log(data);
-
-    console.log(data);
-
-    // dispatch(createPost(data.data));
-
-    // if (data.result === 'fail') {
-    //   alert('오류 발생!');
-    // } else {
-    //   history.replace('/');
-    // }
-  };
 
   const handleRadioChange = (event) => {
     setCategory(event.target.value);
@@ -77,15 +45,14 @@ const PostWrite = () => {
                     setTitle(e.target.value);
                   }}
                 />
-
                 <Grid margin="20px auto">
                   <label style={{ margin: '0px 10px' }} htmlFor="category">
                     <input
-                      id="react"
-                      name="react"
-                      value="react"
+                      id="React"
+                      name="React"
+                      value="React"
                       type="radio"
-                      checked={category === 'react'}
+                      checked={category === 'React'}
                       onChange={handleRadioChange}
                     />
                     React
@@ -115,23 +82,13 @@ const PostWrite = () => {
                 </Grid>
               </Grid>
               <Grid margin="50px auto">
-                <textarea
+                <MarkDownEditor category={category} title={title} />
+                <TextField
+                  label="게시글 내용"
+                  id="postDesc"
                   value={contents}
                   onChange={(e) => setContents(e.target.value)}
                 />
-              </Grid>
-              <Grid>
-                <button type="button" onClick={addPost}>
-                  작성완료
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    history.push('/');
-                  }}
-                >
-                  돌아가기
-                </button>
               </Grid>
             </CardContent>
           </Grid>
@@ -139,11 +96,6 @@ const PostWrite = () => {
       </Grid>
     </Grid>
   );
-};
-
-PostWrite.defaultProps = {
-  title: '님들 이거 맞춰보세용',
-  contents: '우리 조는 왜 4명밖에 없게요?',
 };
 
 export default PostWrite;

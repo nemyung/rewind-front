@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
 
+import MarkDownViewer from '../components/MarkDownViewer';
+
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
@@ -90,9 +92,7 @@ const PostDetail = () => {
             </Stack>
             <Divider />
             <CardContent sx={{ minHeight: '300px' }}>
-              <Typography variant="body2" color="text.secondary">
-                {currentPost?.contents}
-              </Typography>
+              <MarkDownViewer content={currentPost?.contents} />
             </CardContent>
             <Divider />
             <CardContent>

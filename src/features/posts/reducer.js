@@ -7,6 +7,7 @@ import {
   UPDATE,
   ADD_COMMENT,
   LOAD_CURRENT_POST,
+  REMOVE_COMMENT,
 } from './types';
 
 const initialState = {
@@ -70,6 +71,14 @@ export default function postsReducer(state = initialState, action) {
       }
       case ADD_COMMENT: {
         draft.current.comments.unshift(action.payload);
+        break;
+      }
+      case REMOVE_COMMENT: {
+        const index = draft.current.comments.findIndex(
+          (c) => c === action.payload,
+        );
+        console.log(index);
+        draft.current.comments.splice(index, 1);
         break;
       }
       default:
