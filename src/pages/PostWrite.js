@@ -53,7 +53,7 @@ const PostWrite = () => {
                       checked={category === 'React'}
                       onChange={handleRadioChange}
                     />
-                    React
+                    &nbsp;React
                   </label>
                   <label style={{ margin: '0px 10px' }} htmlFor="category">
                     <input
@@ -64,7 +64,7 @@ const PostWrite = () => {
                       checked={category === 'NodeJS'}
                       onChange={handleRadioChange}
                     />
-                    NodeJS
+                    &nbsp;NodeJS
                   </label>
                   <label style={{ margin: '0px 10px' }} htmlFor="category">
                     <input
@@ -75,7 +75,7 @@ const PostWrite = () => {
                       checked={category === 'Spring'}
                       onChange={handleRadioChange}
                     />
-                    Spring
+                    &nbsp;Spring
                   </label>
                 </Grid>
               </Grid>

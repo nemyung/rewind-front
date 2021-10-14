@@ -2,6 +2,7 @@ import React from 'react';
 import Prism from 'prismjs';
 
 import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
 /* eslint-disable */
 
 // toast UI editor
@@ -21,22 +22,20 @@ import { Grid } from '../elements';
 // import { uploadFile } from '../shared/uploadFile';
 import '../styles/toastEditor.css';
 
-const MarkDownEditor = ({ option, category, title }) => {
-    const dispatch = useDispatch()
+const MarkDownEditor = ({ option, category, title, currentContent }) => {
+  const dispatch = useDispatch();
   const toastRef = React.useRef(null);
 
   // const [contents, setContents] = React.useState('');
-  console.log(category)
+  console.log(category);
 
   const getContent = () => {
     const getMarkDown = toastRef.current.getInstance().getMarkdown();
     console.log(getMarkDown);
     // setContents(getMarkDown);
-    console.log(category,title, getMarkDown);
-    dispatch(createPostToAxios({category,title, contents:getMarkDown} ))
+    console.log(category, title, getMarkDown);
+    dispatch(createPostToAxios({ category, title, contents: getMarkDown }));
   };
-
-  
 
   const defaultOpt = {
     previewStyle: 'vertical',
@@ -48,7 +47,7 @@ const MarkDownEditor = ({ option, category, title }) => {
     // colorSyntax: 글자 색 바꾸는 기능 / condeSyntaxHighlight : 언어에 따른 코드 색 변경
     plugins: [colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]],
     // plugins: [colorSyntax],
-    initialValue: '',
+    initialValue: currentContent? currentContent:'',
     // hooks: {
     //   addImageBlobHook: async (blob, callback) => {
     //     const imgUrl = await uploadFile(blob);
@@ -66,15 +65,24 @@ const MarkDownEditor = ({ option, category, title }) => {
     <>
       <Editor {...resultOpt} />
       <Grid>
-        <button type="button" onClick={getContent}>작성완료</button>
-        <button
+        <Button
+          sx={{ float: 'right', margin: '10px' }}
+          variant="contained"
+          type="button"
+          onClick={getContent}
+        >
+          작성완료
+        </Button>
+        <Button
+          sx={{ float: 'right', margin: '10px' }}
+          variant="outlined"
           type="button"
           onClick={() => {
             history.replace('/');
           }}
         >
           돌아가기
-        </button>
+        </Button>
       </Grid>
     </>
   );

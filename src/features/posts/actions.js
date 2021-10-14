@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+// /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import {
   CHANGE_CATEGORY,
@@ -66,7 +66,8 @@ const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
 export const loadPostsToAxios = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${baseURL}/posts`);
+    const pageNumber = 0;
+    const res = await axios.get(`${baseURL}/posts/${pageNumber}`);
     const {
       data: {
         posts: { content },
