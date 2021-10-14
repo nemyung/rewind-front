@@ -1,10 +1,18 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer';
-import { LOAD, CREATE, DELETE, UPDATE, ADD_COMMENT } from './types';
+import {
+  LOAD_POST_LIST,
+  CREATE,
+  DELETE,
+  UPDATE,
+  ADD_COMMENT,
+  LOAD_CURRENT_POST,
+} from './types';
 
 const initialState = {
   byId: {},
   allIds: [],
+  current: {},
 };
 
 /*
@@ -21,11 +29,17 @@ const initialState = {
 export default function postsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
-      case LOAD: {
+      case LOAD_POST_LIST: {
         action.payload.forEach((document) => {
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
         });
+        break;
+      }
+      case LOAD_CURRENT_POST: {
+        const { postId, data } = action.payload;
+        draft.current = data;
+        draft.current.id = postId;
         break;
       }
       case CREATE: {

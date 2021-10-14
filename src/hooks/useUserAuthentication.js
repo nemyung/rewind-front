@@ -52,6 +52,6 @@ export default function useUserAuthentication() {
 
     test();
 
-    return () => 'hello world!';
+    return () => null;
   }, []);
 }

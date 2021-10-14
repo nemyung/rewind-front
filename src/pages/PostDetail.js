@@ -1,5 +1,4 @@
 import React from 'react';
-import isEqaul from 'lodash/isEqual';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -17,16 +16,22 @@ import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 
 import { Grid } from '../elements';
-import { deletePostToAxios } from '../features/posts/actions';
+import {
+  deletePostToAxios,
+  loadCurrentPostToAxios,
+} from '../features/posts/actions';
 
 const PostDetail = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id: postId } = useParams();
-  const post = useSelector((state) => state.posts.byId[postId], isEqaul);
+
   const currentUserEmail = useSelector((state) => state.user.email);
-  const authorEmail = post?.author;
-  const createdAt = post?.insertDt.split('T')[0];
+  const currentPost = useSelector((state) => state.posts.current);
+  const isCurrentPostLoaded = Boolean(Object.keys(currentPost).length);
+
+  const authorEmail = currentPost?.author;
+  const createdAt = currentPost?.insertDt.split('T')[0];
   const isCurrentUserPost = authorEmail === currentUserEmail;
 
   const deletePost = async () => {
@@ -37,6 +42,17 @@ const PostDetail = () => {
       console.error(error);
     }
   };
+
+  React.useEffect(() => {
+    if (isCurrentPostLoaded && postId === currentPost.id) {
+      return;
+    }
+    dispatch(loadCurrentPostToAxios(postId));
+  }, []);
+
+  if (!isCurrentPostLoaded) {
+    return null;
+  }
 
   return (
     <Grid main width="100%" height="100%">
@@ -53,11 +69,11 @@ const PostDetail = () => {
             >
               <Stack direction="row" alignItems="center">
                 <CardHeader
-                  title={post?.title}
+                  title={currentPost?.title}
                   subheader={createdAt}
                   sx={{ mr: 2 }}
                 />
-                <Typography>{post?.nickname}</Typography>
+                <Typography>{currentPost?.nickname}</Typography>
               </Stack>
               {isCurrentUserPost && (
                 <ButtonGroup
@@ -74,14 +90,14 @@ const PostDetail = () => {
             <Divider />
             <CardContent sx={{ minHeight: '300px' }}>
               <Typography variant="body2" color="text.secondary">
-                {post?.contents}
+                {currentPost?.contents}
               </Typography>
             </CardContent>
             <Divider />
             <CardContent>
               <Grid>
                 <CommentForm id={postId} />
-                <CommentList id={postId} />
+                <CommentList />
               </Grid>
             </CardContent>
           </Grid>
