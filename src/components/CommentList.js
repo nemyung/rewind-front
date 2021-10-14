@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -34,8 +35,6 @@ const MOCK_UP = [
   },
 ];
 
-// TODOS: SORT COMMENT LIST
-// TODOS: OPTIMIZATION
 const CommentList = () => {
   const commentIdList = useSelector((state) => {
     const comments = state.posts.current?.comments;
@@ -43,10 +42,9 @@ const CommentList = () => {
     return ids;
   }, isEqual);
 
-  if (!commentIdList.length) {
+  if (!commentIdList?.length) {
     return null;
   }
-
   return commentIdList.map((id) => <Comment key={id} id={id} />);
 };
 

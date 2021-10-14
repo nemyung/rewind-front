@@ -45,7 +45,6 @@ const PostWrite = () => {
                     setTitle(e.target.value);
                   }}
                 />
-
                 <Grid margin="20px auto">
                   <label style={{ margin: '0px 10px' }} htmlFor="category">
                     <input
@@ -88,13 +87,7 @@ const PostWrite = () => {
                   label="게시글 내용"
                   id="postDesc"
                   value={contents}
-                  multiline
-                  maxRows={4}
-                  placeholder="게시글 입력"
-                  type="text"
-                  onChange={(e) => {
-                    setContents(e.target.value);
-                  }}
+                  onChange={(e) => setContents(e.target.value)}
                 />
               </Grid>
             </CardContent>

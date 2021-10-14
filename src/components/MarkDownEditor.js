@@ -65,7 +65,6 @@ const MarkDownEditor = ({ option, category, title }) => {
   return (
     <>
       <Editor {...resultOpt} />
-     
       <Grid>
         <button type="button" onClick={getContent}>작성완료</button>
         <button

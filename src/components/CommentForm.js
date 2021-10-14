@@ -14,6 +14,7 @@ const CommentForm = ({ id }) => {
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     dispatch(addCommentToAxios(id, comment));
+    setComment('');
   };
 
   return (
@@ -41,13 +42,14 @@ CommentForm.propTypes = {
 };
 
 const CommentInputWrapper = styled.div`
-  width: 100%;
+  width: 80%;
   height: 40px;
   display: flex;
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 5px;
   padding: 8px 12px;
+  margin: 0 auto;
   margin-bottom: 14px;
 
   & input {

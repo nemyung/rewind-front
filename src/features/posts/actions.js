@@ -2,12 +2,15 @@
 import axios from 'axios';
 import {
   LOAD_POST_LIST,
+  LOAD_CURRENT_POST,
   CREATE,
   DELETE,
   UPDATE,
   ADD_COMMENT,
-  LOAD_CURRENT_POST,
+  MODIFY_COMMENT,
+  REMOVE_COMMENT,
 } from './types';
+
 import axiosInstace from '../../api/axiosInstace';
 import T from '../../api/tokenInstance';
 
@@ -36,9 +39,14 @@ export const deletePost = (postId) => ({
   payload: postId,
 });
 
-export const addCommentToPost = (postId, addedCommnet) => ({
+export const addCommentToPost = (addedComment) => ({
   type: ADD_COMMENT,
-  payload: { postId, addedCommnet },
+  payload: addedComment,
+});
+
+export const removeCommentToPost = (commentId) => ({
+  type: REMOVE_COMMENT,
+  payload: commentId,
 });
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
@@ -47,10 +55,13 @@ export const loadPostsToAxios = () => async (dispatch) => {
   try {
     const res = await axios.get(`${baseURL}/posts`);
     const {
-      data: { posts },
+      data: {
+        posts: { content },
+      },
     } = res;
+    // console.log(posts);
     // const postList = await axiosInstace.getPost();
-    dispatch(loadPosts(posts));
+    dispatch(loadPosts(content));
   } catch (e) {
     console.log(e);
   }
@@ -59,6 +70,7 @@ export const loadPostsToAxios = () => async (dispatch) => {
 export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
   try {
     const { data } = await T.GET(`/post/${postId}`);
+    console.log(data);
     dispatch(loadCurrentPost(postId, data));
   } catch (error) {
     console.error(error);
@@ -123,13 +135,35 @@ export const addCommentToAxios = (postId, comment) => async (dispatch) => {
 
   try {
     const { data } = await T.POST('/comment', { postId, comment });
-    console.log('CommentToAxiosLogging Start');
-    console.log(data);
-    console.log('CommentToAxiosLogging End');
+    // console.log('CommentToAxiosLogging Start');
+    // console.log(data);
+    // console.log('CommentToAxiosLogging End');
     addedComment = data;
   } catch (error) {
     console.error(error);
   }
+  console.log(addedComment);
+  dispatch(addCommentToPost(addedComment));
+};
 
-  dispatch(addCommentToPost(postId, addedComment));
+export const modifyCommentToAxios =
+  (commentId, updatedComment) => async (dispatch) => {
+    const payload = { id: commentId, comment: updatedComment };
+    try {
+      const res = await T.UPDATE('/comment', commentId, payload);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+export const removeCommentToAxios = (commentId) => async (dispatch) => {
+  try {
+    const { data } = await T.DELETE('/comment', commentId);
+    if (data.result === 'success') {
+      dispatch(removeCommentToPost(commentId));
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
