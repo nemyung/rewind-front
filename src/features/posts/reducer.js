@@ -69,8 +69,7 @@ export default function postsReducer(state = initialState, action) {
         break;
       }
       case ADD_COMMENT: {
-        const { postId, addedComment } = action.payload;
-        draft.byId[postId].comments.unshift(addedComment);
+        draft.current.comments.unshift(action.payload);
         break;
       }
       default:

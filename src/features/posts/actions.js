@@ -36,9 +36,9 @@ export const deletePost = (postId) => ({
   payload: postId,
 });
 
-export const addCommentToPost = (postId, addedCommnet) => ({
+export const addCommentToPost = (addedComment) => ({
   type: ADD_COMMENT,
-  payload: { postId, addedCommnet },
+  payload: addedComment,
 });
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
@@ -59,6 +59,7 @@ export const loadPostsToAxios = () => async (dispatch) => {
 export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
   try {
     const { data } = await T.GET(`/post/${postId}`);
+    console.log(data);
     dispatch(loadCurrentPost(postId, data));
   } catch (error) {
     console.error(error);
@@ -123,13 +124,13 @@ export const addCommentToAxios = (postId, comment) => async (dispatch) => {
 
   try {
     const { data } = await T.POST('/comment', { postId, comment });
-    console.log('CommentToAxiosLogging Start');
-    console.log(data);
-    console.log('CommentToAxiosLogging End');
+    // console.log('CommentToAxiosLogging Start');
+    // console.log(data);
+    // console.log('CommentToAxiosLogging End');
     addedComment = data;
   } catch (error) {
     console.error(error);
   }
-
-  dispatch(addCommentToPost(postId, addedComment));
+  console.log(addedComment);
+  dispatch(addCommentToPost(addedComment));
 };

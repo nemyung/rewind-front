@@ -9,22 +9,21 @@ import TextField from '@mui/material/TextField';
 import T from '../api/tokenInstance';
 import { history } from '../features/configureStore';
 import { Grid } from '../elements';
-import MarkDownEditor from '../components/MarkDownEditor';
 // import { createPost } from '../features/posts/actions';
 
 const PostWrite = () => {
-  const toastRef = React.useRef(null);
+  // const toastRef = React.useRef(null);
 
   // const dispatch = useDispatch();
   const [title, setTitle] = React.useState('');
   const [contents, setContents] = React.useState({ contents: '' });
   const [category, setCategory] = React.useState('React');
 
-  const get = () => {
-    const getMarkDown = toastRef.current.getInstance().getMarkdown();
-    console.log(getMarkDown);
-    setContents(getMarkDown);
-  };
+  // const get = () => {
+  //   const getMarkDown = toastRef.current.getInstance().getMarkdown();
+  //   console.log(getMarkDown);
+  //   setContents(getMarkDown);
+  // };
 
   const addPost = async () => {
     const { data } = await T.POST('/post', {
@@ -116,18 +115,9 @@ const PostWrite = () => {
                 </Grid>
               </Grid>
               <Grid margin="50px auto">
-                <MarkDownEditor function={get} />
-                <TextField
-                  label="게시글 내용"
-                  id="postDesc"
+                <textarea
                   value={contents}
-                  multiline
-                  maxRows={4}
-                  placeholder="게시글 입력"
-                  type="text"
-                  onChange={(e) => {
-                    setContents(e.target.value);
-                  }}
+                  onChange={(e) => setContents(e.target.value)}
                 />
               </Grid>
               <Grid>
