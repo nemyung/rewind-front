@@ -7,6 +7,7 @@ import PostsList from '../pages/PostsList';
 import PostWrite from '../pages/PostWrite';
 import PostEdit from '../pages/PostEdit';
 import PostDetail from '../pages/PostDetail';
+import Permit from './Permit';
 
 function App() {
   return (
@@ -20,11 +21,19 @@ function App() {
           <PostsList />
         </Route>
         <Route exact path="/new">
-          <PostWrite />
+          <Permit>
+            <PostWrite />
+          </Permit>
         </Route>
-        <Route exact path="/detail/:id" component={PostDetail} />
-        <Route exact path="/edit/:id/">
-          <PostEdit />
+        <Route exact path="/post/:id">
+          <Permit>
+            <PostDetail />
+          </Permit>
+        </Route>
+        <Route exact path="/post/:id/edit">
+          <Permit>
+            <PostEdit />
+          </Permit>
         </Route>
       </>
     </Switch>

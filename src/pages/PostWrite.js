@@ -12,19 +12,20 @@ const PostWrite = () => {
   const [category, setCategory] = React.useState('React');
 
   const addPost = async () => {
-    const { data } = await T.POST('/posts/new', {
+    const { data } = await T.POST('/post', {
       title,
       contents,
       category,
     });
+    console.log(data);
 
     // dispatch(createPost(data.data));
 
-    if (data.result === 'fail') {
-      alert('오류 발생!');
-    } else {
-      history.replace('/');
-    }
+    // if (data.result === 'fail') {
+    //   alert('오류 발생!');
+    // } else {
+    //   history.replace('/');
+    // }
   };
 
   const handleRadioChange = (event) => {

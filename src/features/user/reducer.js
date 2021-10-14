@@ -5,6 +5,7 @@ import { LOGIN, LOG_OUT } from './types';
 const initialState = {
   email: '',
   nickname: '',
+  isAuthorized: false,
 };
 
 export default function userReducer(state = initialState, action) {
@@ -13,11 +14,13 @@ export default function userReducer(state = initialState, action) {
       case LOGIN: {
         draft.email = action.payload.email;
         draft.nickname = action.payload.nickname;
+        draft.isAuthorized = true;
         break;
       }
       case LOG_OUT: {
         draft.email = '';
         draft.nickname = '';
+        draft.isAuthorized = false;
         break;
       }
       default:
