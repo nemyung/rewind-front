@@ -16,6 +16,7 @@ const initialState = {
   byId: {},
   allIds: [],
   current: {},
+  page: {},
   category: 'ALL',
 };
 
@@ -42,7 +43,6 @@ export default function postsReducer(state = initialState, action) {
         draft.byId = {};
         draft.allIds = [];
         action.payload.forEach((document) => {
-          console.log(document);
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
         });
@@ -50,6 +50,9 @@ export default function postsReducer(state = initialState, action) {
       }
       case LOAD_CURRENT_POST: {
         const { postId, data } = action.payload;
+        console.log(postId);
+        console.log(data);
+        console.log(action.payload);
         draft.current = data;
         draft.current.id = postId;
         break;
@@ -64,14 +67,10 @@ export default function postsReducer(state = initialState, action) {
       }
       case UPDATE: {
         console.log('UPDATE');
-        const { postId, updatedData } = action.payload;
-        // updatedData의 key를 배열로 만든다.
-        // [id, title, contents]
+        const { updatedData } = action.payload;
         console.log(updatedData.post);
-        console.log(state.byId[postId]);
-        // draft.byId[postId] =
-
-        draft.byId[postId] = updatedData.post;
+        console.log(state.current);
+        draft.current = updatedData.post;
         break;
       }
       case DELETE: {

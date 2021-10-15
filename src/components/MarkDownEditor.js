@@ -22,37 +22,49 @@ import {
 import { history } from '../features/configureStore';
 import { Grid } from '../elements';
 
-// import { uploadFile } from '../shared/uploadFile';
 import '../styles/toastEditor.css';
 
-const MarkDownEditor = ({ option, category, title,updateTitle, currentPost }) => {
+const MarkDownEditor = ({
+  option,
+  category,
+  title,
+  updateTitle,
+  currentPost,
+}) => {
   const dispatch = useDispatch();
   const toastRef = React.useRef(null);
 
-  // const [contents, setContents] = React.useState('');
-  console.log(currentPost);
-
   const getContent = () => {
     const getMarkDown = toastRef.current.getInstance().getMarkdown();
+
+    if (title === '') {
+      window.alert('게시글 제목을 입력 하세요!');
+      return;
+    }
+    if (getMarkDown == '') {
+      window.alert('게시글 내용을 입력 하세요!');
+      return;
+    }
     console.log(getMarkDown);
     console.log(category, title, getMarkDown);
     dispatch(createPostToAxios({ category, title, contents: getMarkDown }));
     history.replace('/');
   };
 
-  // {
-  //   id : postId<String>,
-  //   title : title<String>,
-  //   contents : contents<String>
-  // }
-  console.log(currentPost)
-
   const updatePost = () => {
     const getMarkDown = toastRef.current.getInstance().getMarkdown();
+    if (title === '') {
+      window.alert('게시글 제목을 입력 하세요!');
+      return;
+    }
+    if (getMarkDown == '') {
+      window.alert('게시글 내용을 입력 하세요!');
+      return;
+    }
     dispatch(
       updatePostToAxios(currentPost.id, {
         id: currentPost.id,
-        category:category,
+        category,
         title: updateTitle,
         contents: getMarkDown,
       }),
@@ -69,14 +81,7 @@ const MarkDownEditor = ({ option, category, title,updateTitle, currentPost }) =>
     ref: toastRef,
     // colorSyntax: 글자 색 바꾸는 기능 / condeSyntaxHighlight : 언어에 따른 코드 색 변경
     plugins: [colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]],
-    // plugins: [colorSyntax],
-    initialValue: currentPost ?currentPost.contents : '',
-    // hooks: {
-    //   addImageBlobHook: async (blob, callback) => {
-    //     const imgUrl = await uploadFile(blob);
-    //     callback(imgUrl, 'alt text');
-    //   },
-    // },
+    initialValue: currentPost ? currentPost.contents : '',
   };
 
   const resultOpt = {
@@ -94,7 +99,7 @@ const MarkDownEditor = ({ option, category, title,updateTitle, currentPost }) =>
           type="button"
           onClick={currentPost ? updatePost : getContent}
         >
-          {currentPost? '수정완료' : '작성완료'}
+          {currentPost ? '수정완료' : '작성완료'}
         </Button>
         <Button
           sx={{ float: 'right', margin: '10px' }}

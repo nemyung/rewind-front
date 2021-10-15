@@ -36,9 +36,9 @@ export const createPost = (newPost) => ({
   payload: newPost,
 });
 
-export const updatePost = (postId, updatedData) => ({
+export const updatePost = (updatedData) => ({
   type: UPDATE,
-  payload: { postId, updatedData },
+  payload: { updatedData },
 });
 
 export const deletePost = (postId) => ({
@@ -69,12 +69,14 @@ export const loadPostsToAxios = () => async (dispatch) => {
     const res = await axios.get(`${baseURL}/posts/${pageNumber}`);
     const {
       data: {
-        posts: { content },
+        posts: { content, totalPages },
       },
     } = res;
     console.log('response: ', res);
+    console.log(totalPages);
 
     dispatch(loadPosts(content));
+    // dispatch(loadPosts(content));
   } catch (e) {
     console.log(e);
   }
@@ -106,7 +108,7 @@ export const createPostToAxios = (post) => async (dispatch) => {
 export const updatePostToAxios =
   (postId, updateContents) => async (dispatch) => {
     const res = await T.UPDATE('/post', postId, updateContents);
-    dispatch(updatePost(postId, res.data));
+    dispatch(updatePost(res.data));
     console.log(res.data);
   };
 

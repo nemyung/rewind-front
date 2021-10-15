@@ -16,12 +16,12 @@ import { Grid } from '../elements';
 
 const PostEdit = () => {
   const params = useParams();
-  const [updateTitle, setUpdateTitle] = React.useState('');
+  const currentPost = useSelector((state) => state.posts.byId[params.id]);
+  const [updateTitle, setUpdateTitle] = React.useState(currentPost.title);
   const [category, setCategory] = React.useState('React');
 
-  const currentPost = useSelector((state) => state.posts.byId[params.id]);
-
-  console.log(currentPost);
+  console.log(updateTitle);
+  console.log(category);
   const handleRadioChange = (event) => {
     setCategory(event.target.value);
   };
