@@ -21,9 +21,9 @@ export const changeCategory = (category) => ({
   payload: category,
 });
 
-export const loadPosts = (postList) => ({
+export const loadPosts = (postList, totalPages) => ({
   type: LOAD_POST_LIST,
-  payload: postList,
+  payload: { postList, totalPages },
 });
 
 export const loadCurrentPost = (postId, data) => ({
@@ -63,10 +63,15 @@ export const removeCommentToPost = (commentId) => ({
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
-export const loadPostsToAxios = () => async (dispatch) => {
+export const loadPostsToAxios = (currentPage) => async (dispatch) => {
   try {
-    const pageNumber = 0;
+    console.log(currentPage);
+    const pageNumber = currentPage;
+    console.log(pageNumber);
+    // const pageNumber = currentPage;
     const res = await axios.get(`${baseURL}/posts/${pageNumber}`);
+    console.log(`${baseURL}/posts/${pageNumber}`);
+
     const {
       data: {
         posts: { content, totalPages },
@@ -75,7 +80,7 @@ export const loadPostsToAxios = () => async (dispatch) => {
     console.log('response: ', res);
     console.log(totalPages);
 
-    dispatch(loadPosts(content));
+    dispatch(loadPosts(content, totalPages));
     // dispatch(loadPosts(content));
   } catch (e) {
     console.log(e);
