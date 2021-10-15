@@ -17,7 +17,6 @@ import {
 import { isAllTrue } from '../utils';
 
 const SignUp = ({ toggle = noop }) => {
-  console.log('hello world');
   const [email, isEmailValid, onEmailChange] = useValidation('email', '');
   const [emailLoading, emailFailMessage, emailSuccessMessage, checkEmail] =
     useDuplicationCheck('id');
@@ -37,6 +36,7 @@ const SignUp = ({ toggle = noop }) => {
   ] = useDuplicationCheck('nickname');
 
   const [submitLoading, formErrorMessage, signUp] = useSignUp(toggle);
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     signUp(email, pw, pwAgain, nickname);
