@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import isEqaul from 'lodash/isEqual';
 
 import { useDispatch, useSelector } from 'react-redux';
+
 import { styled } from '@mui/material/styles';
 
 import Table from '@mui/material/Table';
@@ -12,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
+// import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { Grid } from '../elements';
@@ -20,13 +22,14 @@ import { loadPostsToAxios } from '../features/posts/actions';
 import PostTitle from '../components/PostTitle';
 
 /* eslint-disable */
+
+// tableHead: viewport mobile 적용 x
 const PostsList = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   // 반환하는 값이 객체나 배열일 때 isEqaul
   // 모든 객체 랜더링이 아닌 특정 객체만 랜더링 됨
   const postList = useSelector((state) => state.posts, isEqaul);
-  console.log(postList);
 
   React.useEffect(() => {
     if (postList.allIds.length !== 0) {
@@ -36,13 +39,12 @@ const PostsList = () => {
   }, []);
 
   return (
-    <>
-      <Grid padding="50px 200px">
+    <Grid padding="50px 200px">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell sx={{ width: '60px' }} align="center">
+              <StyledTableCell sx={{ width: '60px' }} align="center">
                   Cat.
                 </StyledTableCell>
                 <StyledTableCell
@@ -79,12 +81,11 @@ const PostsList = () => {
         >
           글쓰기
         </Button>
-      </Grid>
-    </>
+    </Grid>
   );
 };
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#1976d2',
     color: '#FFF',

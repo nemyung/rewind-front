@@ -26,6 +26,7 @@ const Comment = ({ id }) => {
     (state) => state.posts.current.comments.find((c) => c.id === id),
     isEqual,
   );
+
   const dispatch = useDispatch();
   const currentUserNickname = useSelector((state) => state.user.nickname);
   const [modifiedComment, setModifiedComment] = React.useState('');
@@ -44,6 +45,7 @@ const Comment = ({ id }) => {
     handleClose();
     setModifiedComment('');
   };
+
   const handleDeleteButtonClick = () => {
     dispatch(removeCommentToAxios(comment.id));
   };

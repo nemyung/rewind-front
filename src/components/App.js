@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Header from './Header/Header';
 import Sign from '../pages/Sign';
 import PostsList from '../pages/PostsList';
+import PostsListResponsive from '../pages/PostsListResponsive';
 import PostWrite from '../pages/PostWrite';
 import PostEdit from '../pages/PostEdit';
 import PostDetail from '../pages/PostDetail';
@@ -13,6 +14,7 @@ import { useUserAuthentication } from '../hooks';
 
 function App() {
   useUserAuthentication();
+  const isWebView = window.matchMedia('(min-width: 1200px)').matches;
   return (
     <Switch>
       <Route exact path="/sign">
@@ -21,7 +23,7 @@ function App() {
       <>
         <Header />
         <Route exact path="/">
-          <PostsList />
+          {isWebView ? <PostsList /> : <PostsListResponsive />}
         </Route>
         <Route exact path="/new">
           <Permit>
