@@ -31,3 +31,15 @@ export const validateInput = (email, password, passwordAgain) => {
 export const isAllTrue = (...args) => {
   return args.every(Boolean);
 };
+
+export const validatePost = (title, contents) => {
+  if (title === '') {
+    window.alert('게시글 제목을 입력 하세요!');
+    return false;
+  }
+  if (contents === '') {
+    window.alert('게시글 내용을 입력 하세요!');
+    return false;
+  }
+  return true;
+};

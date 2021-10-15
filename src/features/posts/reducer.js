@@ -20,17 +20,6 @@ const initialState = {
   category: 'ALL',
 };
 
-/*
-  const initialPostState = {
-    postId: postId<Number>,
-    title: title<String>,
-    author: userEmail<String>,
-    nickname: userNickname<String>,
-    contents: contents<String>,
-    insertDt: ISOString<String>
-  };
-*/
-
 export default function postsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     switch (action.type) {
@@ -39,14 +28,12 @@ export default function postsReducer(state = initialState, action) {
         break;
       }
       case LOAD_POST_LIST: {
-        console.log(action.payload);
         draft.byId = {};
         draft.allIds = [];
         action.payload.postList.forEach((document) => {
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
         });
-        console.log(action.payload.totalElements);
 
         draft.totalPost = action.payload.totalElements;
         break;
@@ -58,8 +45,6 @@ export default function postsReducer(state = initialState, action) {
         break;
       }
       case CREATE: {
-        console.log('CREATE');
-        console.log(action.payload);
         const { id } = action.payload;
         draft.byId[id] = action.payload;
         draft.allIds.unshift(id);
