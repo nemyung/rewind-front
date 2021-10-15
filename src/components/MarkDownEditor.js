@@ -24,6 +24,7 @@ import { history } from '../features/configureStore';
 import { Grid } from '../elements';
 
 import '../styles/toastEditor.css';
+import { color } from '@mui/system';
 
 const MarkDownEditor = ({
   option,
@@ -99,7 +100,7 @@ const MarkDownEditor = ({
       <Editor {...resultOpt} />
       <Grid>
         <Button
-          sx={{ float: 'right', margin: '10px' }}
+          sx={{ float: 'right', margin: '10px'}}
           variant="contained"
           type="button"
           onClick={id ? updatePost : getContent}

@@ -16,6 +16,7 @@ const iconStyle = {
   height: '24px',
 };
 
+/* eslint-disable */
 const PostTitle = ({ id = '' }) => {
   const title = useSelector((state) => state.posts.byId);
   const toDay = title[id].insertDt.split('T')[0];
@@ -35,8 +36,16 @@ const PostTitle = ({ id = '' }) => {
           {title[id].category === 'NODE' && <NodeIcon style={iconStyle} />}
           {title[id].category === 'SPRING' && <SpringIcon style={iconStyle} />}
         </TableCell>
-        <TableCell onClick={moveToPostDetail} align="left">
-          {title[id].title}
+        <TableCell align="left">
+          <p
+            onClick={moveToPostDetail}
+            style={{
+              cursor: 'pointer',
+              display: 'inline-block',
+            }}
+          >
+            {title[id].title}
+          </p>
         </TableCell>
         <TableCell align="center">{title[id].nickname}</TableCell>
         {/* <TableCell align="left">{title[id].insertDt}</TableCell> */}

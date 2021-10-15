@@ -14,7 +14,6 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 
 import { loadPostsToAxios } from '../features/posts/actions';
-
 import { ReactComponent as NodeIcon } from '../assets/node.svg';
 import { ReactComponent as ReactIcon } from '../assets/react.svg';
 import { ReactComponent as SpringIcon } from '../assets/spring.svg';
