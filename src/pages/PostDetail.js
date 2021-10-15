@@ -47,6 +47,7 @@ const PostDetail = () => {
   };
 
   React.useEffect(() => {
+    // 접속자랑 작성자가 같으면 포스트 아이디는 현재 작성자랑 같다
     if (isCurrentPostLoaded && postId === currentPost.id) {
       return;
     }

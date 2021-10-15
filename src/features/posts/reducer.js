@@ -64,13 +64,14 @@ export default function postsReducer(state = initialState, action) {
       }
       case UPDATE: {
         console.log('UPDATE');
-        console.log(action.payload);
         const { postId, updatedData } = action.payload;
         // updatedData의 key를 배열로 만든다.
         // [id, title, contents]
-        Object.keys(updatedData).forEach((key) => {
-          draft.byId[postId][key] = updatedData[key];
-        });
+        console.log(updatedData.post);
+        console.log(state.byId[postId]);
+        // draft.byId[postId] =
+
+        draft.byId[postId] = updatedData.post;
         break;
       }
       case DELETE: {

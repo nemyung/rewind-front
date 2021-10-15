@@ -14,7 +14,10 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js';
-import { createPostToAxios } from '../features/posts/actions';
+import {
+  createPostToAxios,
+  updatePostToAxios,
+} from '../features/posts/actions';
 
 import { history } from '../features/configureStore';
 import { Grid } from '../elements';
@@ -22,19 +25,39 @@ import { Grid } from '../elements';
 // import { uploadFile } from '../shared/uploadFile';
 import '../styles/toastEditor.css';
 
-const MarkDownEditor = ({ option, category, title, currentContent }) => {
+const MarkDownEditor = ({ option, category, title,updateTitle, currentPost }) => {
   const dispatch = useDispatch();
   const toastRef = React.useRef(null);
 
   // const [contents, setContents] = React.useState('');
-  console.log(category);
+  console.log(currentPost);
 
   const getContent = () => {
     const getMarkDown = toastRef.current.getInstance().getMarkdown();
     console.log(getMarkDown);
-    // setContents(getMarkDown);
     console.log(category, title, getMarkDown);
     dispatch(createPostToAxios({ category, title, contents: getMarkDown }));
+    history.replace('/');
+  };
+
+  // {
+  //   id : postId<String>,
+  //   title : title<String>,
+  //   contents : contents<String>
+  // }
+  console.log(currentPost)
+
+  const updatePost = () => {
+    const getMarkDown = toastRef.current.getInstance().getMarkdown();
+    dispatch(
+      updatePostToAxios(currentPost.id, {
+        id: currentPost.id,
+        category:category,
+        title: updateTitle,
+        contents: getMarkDown,
+      }),
+    );
+    history.replace(`/post/${currentPost.id}`);
   };
 
   const defaultOpt = {
@@ -47,7 +70,7 @@ const MarkDownEditor = ({ option, category, title, currentContent }) => {
     // colorSyntax: 글자 색 바꾸는 기능 / condeSyntaxHighlight : 언어에 따른 코드 색 변경
     plugins: [colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]],
     // plugins: [colorSyntax],
-    initialValue: currentContent? currentContent:'',
+    initialValue: currentPost ?currentPost.contents : '',
     // hooks: {
     //   addImageBlobHook: async (blob, callback) => {
     //     const imgUrl = await uploadFile(blob);
@@ -69,9 +92,9 @@ const MarkDownEditor = ({ option, category, title, currentContent }) => {
           sx={{ float: 'right', margin: '10px' }}
           variant="contained"
           type="button"
-          onClick={getContent}
+          onClick={currentPost ? updatePost : getContent}
         >
-          작성완료
+          {currentPost? '수정완료' : '작성완료'}
         </Button>
         <Button
           sx={{ float: 'right', margin: '10px' }}

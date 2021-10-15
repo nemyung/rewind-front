@@ -14,50 +14,21 @@ import MarkDownEditor from '../components/MarkDownEditor';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Grid } from '../elements';
 
-/* eslint-disable */
-
 const PostEdit = () => {
   const params = useParams();
-  // const dispatch = useDispatch();
   const [updateTitle, setUpdateTitle] = React.useState('');
-  // const [updateContents, setUpdateContents] = React.useState('');
   const [category, setCategory] = React.useState('React');
 
-  const currentPost = useSelector(state => state.posts.byId[params.id])
+  const currentPost = useSelector((state) => state.posts.byId[params.id]);
 
-  console.log(currentPost)
+  console.log(currentPost);
   const handleRadioChange = (event) => {
     setCategory(event.target.value);
   };
 
-  // const editPost = () => {
-  //   // postid, contents
-  //   dispatch(
-  //     // 로컬 테스트
-  //     // updatePostToAxios(params.id, {
-  //     //   title: updateTitle,
-  //     //   contents: updateContents,
-  //     // }),
-
-  //     // 명세 된 형식으로 보냄.
-  //     updatePostToAxios({
-  //       id: params.id,
-  //       title: updateTitle,
-  //       contents: updateContents,
-  //     }),
-  //   );
-  //   console.log(params);
-  //   console.log(updateTitle);
-  //   console.log(updateContents);
-  // };
-
   const editTitle = (e) => {
     setUpdateTitle(e.target.value);
   };
-
-  // const editContents = (e) => {
-  //   setUpdateContents(e.target.value);
-  // };
 
   return (
     <Grid>
@@ -123,7 +94,11 @@ const PostEdit = () => {
                 </Grid>
               </Grid>
               <Grid margin="50px auto">
-                <MarkDownEditor category={category} title={updateTitle} currentContent = {currentPost.Content}  />
+                <MarkDownEditor
+                  category={category}
+                  updateTitle={updateTitle}
+                  currentPost={currentPost}
+                />
               </Grid>
             </CardContent>
           </Grid>
