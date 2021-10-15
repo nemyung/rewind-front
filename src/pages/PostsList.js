@@ -16,6 +16,9 @@ import TableHead from '@mui/material/TableHead';
 // import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import { Grid } from '../elements';
 
 import { loadPostsToAxios } from '../features/posts/actions';
@@ -25,11 +28,18 @@ import PostTitle from '../components/PostTitle';
 
 // tableHead: viewport mobile 적용 x
 const PostsList = () => {
+  const [page, setPage] = React.useState(1);
   const dispatch = useDispatch();
   const history = useHistory();
   // 반환하는 값이 객체나 배열일 때 isEqaul
   // 모든 객체 랜더링이 아닌 특정 객체만 랜더링 됨
+  const PageNation = useSelector((state => state))
   const postList = useSelector((state) => state.posts, isEqaul);
+  console.log(PageNation);
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   React.useEffect(() => {
     if (postList.allIds.length !== 0) {
@@ -74,6 +84,10 @@ const PostsList = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Stack spacing={2}>
+      <Typography>Page: {page}</Typography>
+      <Pagination count={10} page={page} onChange={handleChange} />
+    </Stack>
         <Button
           sx={{ float: 'right', margin: '10px' , fontWeight:'bold'}}
           variant="contained"
