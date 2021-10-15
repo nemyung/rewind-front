@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 /* eslint-disable */
 
 const Post = (props) => {
-  // const toDay = isPost?.insertDt.split('T')[0];
   const userInfo = useSelector((state) => state.user.email);
 
   const isMe = userInfo === isPost.email;

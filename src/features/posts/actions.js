@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-// /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import {
   CHANGE_CATEGORY,
@@ -22,9 +20,9 @@ export const changeCategory = (category) => ({
   payload: category,
 });
 
-export const loadPosts = (postList, totalPages) => ({
+export const loadPosts = (postList, totalElements) => ({
   type: LOAD_POST_LIST,
-  payload: { postList, totalPages },
+  payload: { postList, totalElements },
 });
 
 export const loadCurrentPost = (postId, data) => ({
@@ -75,13 +73,13 @@ export const loadPostsToAxios = (currentPage) => async (dispatch) => {
 
     const {
       data: {
-        posts: { content, totalPages },
+        posts: { content, totalElements },
       },
     } = res;
     console.log('response: ', res);
-    console.log(totalPages);
+    console.log(totalElements);
 
-    dispatch(loadPosts(content, totalPages));
+    dispatch(loadPosts(content, totalElements));
     // dispatch(loadPosts(content));
   } catch (e) {
     console.log(e);
@@ -123,19 +121,6 @@ export const updatePostToAxios =
     console.log(post);
     dispatch(updatePost(post));
   };
-
-// API 명세서 대로 전달 합니다.
-// {
-//   id : postId<String>,
-//   title : title<String>,
-//   contents : contents<String>
-// }
-// /post/{id}
-
-// export const updatePostToAxios = (updateContents) => async (dispatch) => {
-//   const editPost = await axiosInstace.editPost(updateContents);
-//   dispatch(updatePost(postId ,editPost.data));
-// };
 
 export const deletePostToAxios = (postId) => async (dispatch) => {
   try {

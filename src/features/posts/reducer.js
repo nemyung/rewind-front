@@ -16,7 +16,7 @@ const initialState = {
   byId: {},
   allIds: [],
   current: {},
-  page: '',
+  totalPost: {},
   category: 'ALL',
 };
 
@@ -46,9 +46,9 @@ export default function postsReducer(state = initialState, action) {
           draft.byId[document.id] = document;
           draft.allIds.push(document.id);
         });
-        console.log(action.payload.totalPages);
+        console.log(action.payload.totalElements);
 
-        draft.page = action.payload.totalPages;
+        draft.totalPost = action.payload.totalElements;
         break;
       }
       case LOAD_CURRENT_POST: {

@@ -73,10 +73,11 @@ const TopNevigation = ({ status }) => {
     const {
       data: { posts },
     } = await axios.get(endpoint);
+    console.log(posts);
 
-    const { content } = posts;
+    const { content, totalElements } = posts;
 
-    dispatch(loadPosts(content));
+    dispatch(loadPosts(content, totalElements));
     dispatch(changeCategory(upperCase));
   };
 
