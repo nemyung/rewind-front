@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import {
@@ -36,9 +37,9 @@ export const createPost = (newPost) => ({
   payload: newPost,
 });
 
-export const updatePost = (updatedData) => ({
+export const updatePost = (updatedPost) => ({
   type: UPDATE,
-  payload: { updatedData },
+  payload: updatedPost,
 });
 
 export const deletePost = (postId) => ({
@@ -94,6 +95,7 @@ export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
 
 export const createPostToAxios = (post) => async (dispatch) => {
   try {
+    console.log('createPostToAxios');
     console.log(post);
     const res = await T.POST('/post', post);
     console.log(res);
@@ -107,9 +109,14 @@ export const createPostToAxios = (post) => async (dispatch) => {
 
 export const updatePostToAxios =
   (postId, updateContents) => async (dispatch) => {
-    const res = await T.UPDATE('/post', postId, updateContents);
-    dispatch(updatePost(res.data));
-    console.log(res.data);
+    const {
+      data: { post },
+    } = await T.UPDATE('/post', postId, updateContents);
+    // console.log(data);
+    // const { post: updatedPost } = data;
+    // console.log(newPost);
+    console.log(post);
+    dispatch(updatePost(post));
   };
 
 // API 명세서 대로 전달 합니다.

@@ -5,7 +5,7 @@ import { LOGIN, LOG_OUT, AUTHORIZED } from './types';
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
-const login = (payload) => ({
+export const login = (payload) => ({
   type: LOGIN,
   payload,
 });

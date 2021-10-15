@@ -50,9 +50,6 @@ export default function postsReducer(state = initialState, action) {
       }
       case LOAD_CURRENT_POST: {
         const { postId, data } = action.payload;
-        console.log(postId);
-        console.log(data);
-        console.log(action.payload);
         draft.current = data;
         draft.current.id = postId;
         break;
@@ -66,11 +63,8 @@ export default function postsReducer(state = initialState, action) {
         break;
       }
       case UPDATE: {
-        console.log('UPDATE');
-        const { updatedData } = action.payload;
-        console.log(updatedData.post);
-        console.log(state.current);
-        draft.current = updatedData.post;
+        draft.current = action.payload;
+        draft.byId[action.payload.id].title = action.payload.title;
         break;
       }
       case DELETE: {
