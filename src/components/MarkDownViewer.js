@@ -1,7 +1,6 @@
-import React from 'react';
 /* eslint-disable */
+import React from 'react';
 
-// toast UI viewer
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
@@ -11,14 +10,13 @@ import '../styles/toastEditor.css';
 
 
 const MarkDownViewer = ({ option, content }) => {
-  console.log(content);
   const viewerOpt = {
-    // initialValue: content,
+    initialValue: content,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
     ...option,
   };
 
-  return <Viewer {...viewerOpt} initialValue={content} />;
+  return <Viewer {...viewerOpt} />;
 };
 
 export default MarkDownViewer;

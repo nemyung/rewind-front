@@ -13,8 +13,6 @@ import {
 
 import T from '../../api/tokenInstance';
 
-// ActionCreator
-
 export const changeCategory = (category) => ({
   type: CHANGE_CATEGORY,
   payload: category,
@@ -64,32 +62,23 @@ const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
 export const loadPostsToAxios = (currentPage) => async (dispatch) => {
   try {
-    console.log(currentPage);
     const pageNumber = currentPage;
-    console.log(pageNumber);
-    // const pageNumber = currentPage;
     const res = await axios.get(`${baseURL}/posts/${pageNumber}`);
-    console.log(`${baseURL}/posts/${pageNumber}`);
 
     const {
       data: {
         posts: { content, totalElements },
       },
     } = res;
-    console.log('response: ', res);
-    console.log(totalElements);
-
     dispatch(loadPosts(content, totalElements));
-    // dispatch(loadPosts(content));
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error(error);
   }
 };
 
 export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
   try {
     const { data } = await T.GET(`/post/${postId}`);
-    console.log(data);
     dispatch(loadCurrentPost(Number(postId), data));
   } catch (error) {
     console.error(error);
@@ -98,15 +87,11 @@ export const loadCurrentPostToAxios = (postId) => async (dispatch) => {
 
 export const createPostToAxios = (post) => async (dispatch) => {
   try {
-    console.log('createPostToAxios');
-    console.log(post);
     const res = await T.POST('/post', post);
-    console.log(res);
-    // 현재 response는 success 밖에 없음
 
     dispatch(createPost(res.data.post));
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -115,19 +100,12 @@ export const updatePostToAxios =
     const {
       data: { post },
     } = await T.UPDATE('/post', postId, updateContents);
-    // console.log(data);
-    // const { post: updatedPost } = data;
-    // console.log(newPost);
-    console.log(post);
     dispatch(updatePost(post));
   };
 
 export const deletePostToAxios = (postId) => async (dispatch) => {
   try {
-    console.log('deletePostToAxiosLogging Start');
-    const res = await T.DELETE('/post', postId);
-    console.log(res);
-    console.log('deletePostToAxiosLogging End');
+    await T.DELETE('/post', postId);
     dispatch(deletePost(postId));
   } catch (error) {
     console.error(error);

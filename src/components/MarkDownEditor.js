@@ -1,12 +1,11 @@
+/* eslint-disable */
 import React from 'react';
 import Prism from 'prismjs';
 
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
-/* eslint-disable */
 
-// toast UI editor
+
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import 'tui-color-picker/dist/tui-color-picker.css';
@@ -15,6 +14,7 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js';
+import { validatePost } from '../utils';
 import {
   createPostToAxios,
   updatePostToAxios,
@@ -24,7 +24,6 @@ import { history } from '../features/configureStore';
 import { Grid } from '../elements';
 
 import '../styles/toastEditor.css';
-import { color } from '@mui/system';
 
 const MarkDownEditor = ({
   option,
@@ -35,38 +34,24 @@ const MarkDownEditor = ({
 }) => {
   const dispatch = useDispatch();
   const toastRef = React.useRef(null);
-  const { id = '' } = useParams();
-  
 
-  const getContent = () => {
+  const getContent = async () => {
     const getMarkDown = toastRef.current.getInstance().getMarkdown();
-
-    if (title === '') {
-      window.alert('게시글 제목을 입력 하세요!');
+    if (!validatePost(title, getMarkDown)) {
       return;
     }
-    if (getMarkDown == '') {
-      window.alert('게시글 내용을 입력 하세요!');
-      return;
-    }
-    
-    dispatch(createPostToAxios({ category, title, contents: getMarkDown }));
-    // history.replace('/');
+    await dispatch(
+      createPostToAxios({ category, title, contents: getMarkDown }),
+    );
+    history.replace('/');
   };
 
-  const updatePost = () => {
+  const updatePost = async () => {
     const getMarkDown = toastRef.current.getInstance().getMarkdown();
-    if (title === '') {
-      window.alert('게시글 제목을 입력 하세요!');
+    if (!validatePost(title, getMarkDown)) {
       return;
     }
-
-    if (getMarkDown == '') {
-      window.alert('게시글 내용을 입력 하세요!');
-      return;
-    }
-
-    dispatch(
+    await dispatch(
       updatePostToAxios(currentPost.id, {
         id: currentPost.id,
         category,
@@ -74,7 +59,6 @@ const MarkDownEditor = ({
         contents: getMarkDown,
       }),
     );
-
     history.replace(`/post/${currentPost.id}`);
   };
 
@@ -85,7 +69,6 @@ const MarkDownEditor = ({
     useCommandShortcut: true,
     previewHighlight: false,
     ref: toastRef,
-    // colorSyntax: 글자 색 바꾸는 기능 / condeSyntaxHighlight : 언어에 따른 코드 색 변경
     plugins: [colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]],
     initialValue: currentPost ? currentPost.contents : '',
   };
@@ -100,18 +83,20 @@ const MarkDownEditor = ({
       <Editor {...resultOpt} />
       <Grid>
         <Button
-          sx={{ float: 'right', margin: '10px'}}
+          sx={{ float: 'right', margin: '10px' }}
           variant="contained"
           type="button"
-          onClick={id ? updatePost : getContent}
+          onClick={currentPost ? updatePost : getContent}
         >
-          {id ? '수정완료' : '작성완료'}
+          {currentPost ? '수정완료' : '작성완료'}
         </Button>
         <Button
           sx={{ float: 'right', margin: '10px' }}
           variant="outlined"
           type="button"
-          onClick={() => history.goBack()}
+          onClick={() => {
+            history.replace('/');
+          }}
         >
           돌아가기
         </Button>
