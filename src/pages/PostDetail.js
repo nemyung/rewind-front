@@ -1,3 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable import/extensions */
+/* eslint-disable no-undef */
+/* eslint-disable import/order */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
@@ -12,13 +17,17 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
 
-import MarkDownViewer from '../components/MarkDownViewer';
-
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
-import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
-
+import CommentList from '../components/CommentList';
 import { Grid } from '../elements';
+
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js';
+import 'prismjs/themes/prism.css';
+import '../styles/toastEditor.css';
+
 import {
   deletePostToAxios,
   loadCurrentPostToAxios,
@@ -27,15 +36,18 @@ import {
 const PostDetail = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { id: postId } = useParams();
+  const { id: postId = '' } = useParams();
 
   const currentUserEmail = useSelector((state) => state.user.email);
   const currentPost = useSelector((state) => state.posts.current);
+
   const isCurrentPostLoaded = Boolean(Object.keys(currentPost).length);
 
   const authorEmail = currentPost?.author;
   const createdAt = currentPost?.insertDt?.split('T')[0];
   const isCurrentUserPost = authorEmail === currentUserEmail;
+
+  const viewerRef = React.useRef(null);
 
   const deletePost = async () => {
     try {
@@ -45,13 +57,21 @@ const PostDetail = () => {
       console.error(error);
     }
   };
-  console.log(currentPost);
+
   React.useEffect(() => {
-    if (isCurrentPostLoaded && postId === currentPost.id) {
-      return;
-    }
     dispatch(loadCurrentPostToAxios(postId));
   }, []);
+
+  React.useEffect(() => {
+    console.log(viewerRef.current);
+    console.log('done');
+  }, []);
+
+  const option = {
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+    initialValue: currentPost.contents,
+    ref: viewerRef,
+  };
 
   if (!isCurrentPostLoaded) {
     return null;
@@ -73,6 +93,7 @@ const PostDetail = () => {
               <Stack direction="row" alignItems="center">
                 <CardHeader
                   title={currentPost?.title}
+                  // title={post.title}
                   subheader={createdAt}
                   sx={{ mr: 2 }}
                 />
@@ -92,7 +113,7 @@ const PostDetail = () => {
             </Stack>
             <Divider />
             <CardContent sx={{ minHeight: '300px' }}>
-              <MarkDownViewer content={currentPost?.contents} />
+              <Viewer {...option} />
             </CardContent>
             <Divider />
             <CardContent>

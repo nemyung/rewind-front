@@ -2,6 +2,7 @@ import React from 'react';
 import Prism from 'prismjs';
 
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 /* eslint-disable */
 
@@ -33,6 +34,8 @@ const MarkDownEditor = ({
 }) => {
   const dispatch = useDispatch();
   const toastRef = React.useRef(null);
+  const { id = '' } = useParams();
+  
 
   const getContent = () => {
     const getMarkDown = toastRef.current.getInstance().getMarkdown();
@@ -45,10 +48,9 @@ const MarkDownEditor = ({
       window.alert('게시글 내용을 입력 하세요!');
       return;
     }
-    console.log(getMarkDown);
-    console.log(category, title, getMarkDown);
+    
     dispatch(createPostToAxios({ category, title, contents: getMarkDown }));
-    history.replace('/');
+    // history.replace('/');
   };
 
   const updatePost = () => {
@@ -57,10 +59,12 @@ const MarkDownEditor = ({
       window.alert('게시글 제목을 입력 하세요!');
       return;
     }
+
     if (getMarkDown == '') {
       window.alert('게시글 내용을 입력 하세요!');
       return;
     }
+
     dispatch(
       updatePostToAxios(currentPost.id, {
         id: currentPost.id,
@@ -69,6 +73,7 @@ const MarkDownEditor = ({
         contents: getMarkDown,
       }),
     );
+
     history.replace(`/post/${currentPost.id}`);
   };
 
@@ -97,17 +102,15 @@ const MarkDownEditor = ({
           sx={{ float: 'right', margin: '10px' }}
           variant="contained"
           type="button"
-          onClick={currentPost ? updatePost : getContent}
+          onClick={id ? updatePost : getContent}
         >
-          {currentPost ? '수정완료' : '작성완료'}
+          {id ? '수정완료' : '작성완료'}
         </Button>
         <Button
           sx={{ float: 'right', margin: '10px' }}
           variant="outlined"
           type="button"
-          onClick={() => {
-            history.replace('/');
-          }}
+          onClick={() => history.goBack()}
         >
           돌아가기
         </Button>
