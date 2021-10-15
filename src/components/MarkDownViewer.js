@@ -13,12 +13,12 @@ import '../styles/toastEditor.css';
 const MarkDownViewer = ({ option, content }) => {
   console.log(content);
   const viewerOpt = {
-    initialValue: content,
+    // initialValue: content,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
     ...option,
   };
 
-  return <Viewer {...viewerOpt} />;
+  return <Viewer {...viewerOpt} initialValue={content} />;
 };
 
 export default MarkDownViewer;

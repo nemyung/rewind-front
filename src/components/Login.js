@@ -1,7 +1,11 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 import React from 'react';
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { useLocation, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,16 +20,46 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import DirectionsBoatFilledIcon from '@mui/icons-material/DirectionsBoatFilled';
 import { ErrorMessage } from './Signup';
 import { useInput, useLogin } from '../hooks';
+import { login as loginAction } from '../features/user/actions';
+import { saveToken } from '../utils/auth';
+
+const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
 const Login = ({ toggle = noop }) => {
   const [email, handleEmailChange] = useInput('');
   const [pw, handlePwChange] = useInput('');
   const [loading, failMessage, login] = useLogin();
+  const history = useHistory();
+  const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     login(email, pw);
   };
+
+  React.useEffect(() => {
+    if (!location.search) {
+      return null;
+    }
+    const query = location.search;
+    const code = query.split('=')[1];
+
+    async function kakaoTest() {
+      try {
+        const { data } = await axios({
+          method: 'GET',
+          url: `${baseURL}/kakao/callback?code=${code}`,
+        });
+        saveToken(data.token);
+        dispatch(loginAction({ email: data.email, nickname: data.nickname }));
+        history.replace('/');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    kakaoTest();
+  }, []);
 
   return (
     <Box component="form" autoComplete="off">
@@ -79,6 +113,14 @@ const Login = ({ toggle = noop }) => {
       >
         회원가입하기
       </Button>
+      <button
+        type="button"
+        onClick={() =>
+          (window.location.href = `${process.env.REACT_APP_KAKAO_PATH}`)
+        }
+      >
+        하나더
+      </button>
     </Box>
   );
 };

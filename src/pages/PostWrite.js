@@ -1,18 +1,69 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
-import { Grid } from '../elements';
+import Button from '@mui/material/Button';
+
+/* eslint-disable */
 import MarkDownEditor from '../components/MarkDownEditor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/react-editor';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+import 'prismjs/themes/prism.css';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js';
+import { Grid } from '../elements';
+
+import { createPostToAxios } from '../features/posts/actions';
 
 const PostWrite = () => {
   const [title, setTitle] = React.useState('');
   const [category, setCategory] = React.useState('React');
+  const [contents, setContents] = React.useState('');
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleRadioChange = (event) => {
     setCategory(event.target.value);
+  };
+
+  const editorRef = React.useRef(null);
+  
+  const options = {
+    previewStyle: 'vertical',
+    initialEditType: 'markdown',
+    height: '600px',
+    useCommandShortcut: true,
+    previewHighlight: false,
+    ref: editorRef,
+    plugins: [colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]],
+    initialValue: contents,
+    events: {
+      change() {
+        setContents(editorRef.current.getInstance().getMarkdown());
+      }
+    }
+  };
+
+  const handleSubmitButtonClick = () => {
+    if (!title) {
+      window.alert('게시물 제목을 입력해주세요.');
+      return;
+    }
+
+    if (!contents) {
+      window.alert('게시물 내용을 입력해주세요.');
+      return;
+    }
+
+    dispatch(createPostToAxios({ category, title, contents }));
+    history.replace('/');
   };
 
   return (
@@ -78,9 +129,32 @@ const PostWrite = () => {
                     &nbsp;Spring
                   </label>
                 </Grid>
+                <button onClick={() => {
+                  const current = editorRef.current;
+                  console.log(current);
+                }}>test</button>
+              </Grid>
+              <Editor {...options}/>
+              <Grid>
+                <Button
+                  sx={{ float: 'right', margin: '10px' }}
+                  variant="contained"
+                  type="button"
+                  onClick={handleSubmitButtonClick}
+                >
+                  작성완료
+                </Button>
+                <Button
+                  sx={{ float: 'right', margin: '10px' }}
+                  variant="outlined"
+                  type="button"
+                  onClick={() => history.goBack()}
+                >
+                  돌아가기
+                </Button>
               </Grid>
               <Grid margin="50px auto">
-                <MarkDownEditor category={category} title={title} />
+                {/* <MarkDownEditor category={category} title={title} /> */}
               </Grid>
             </CardContent>
           </Grid>
