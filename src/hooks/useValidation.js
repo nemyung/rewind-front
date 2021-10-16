@@ -11,6 +11,7 @@ export default function useValidation(type, initialValue) {
   const onChange = React.useCallback((nextState) => {
     const value =
       typeof nextState === 'function' ? nextState(state) : nextState;
+
     setState(value);
 
     if (value.length === 0) {

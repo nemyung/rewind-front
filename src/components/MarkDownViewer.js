@@ -8,7 +8,6 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight/d
 import 'prismjs/themes/prism.css';
 import '../styles/toastEditor.css';
 
-
 const MarkDownViewer = ({ option, content }) => {
   const viewerRef = React.useRef(null);
   const viewerOpt = {

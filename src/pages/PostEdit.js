@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Card from '@mui/material/Card';
@@ -8,20 +7,13 @@ import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import MarkDownEditor from '../components/MarkDownEditor';
 
-// import IconButton from '@mui/material/IconButton';
-// import { updatePostToAxios } from '../features/posts/actions';
-// import { history } from '../features/configureStore';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Grid } from '../elements';
 
 const PostEdit = () => {
-  const params = useParams();
   const currentPost = useSelector((state) => state.posts.current);
   const [updateTitle, setUpdateTitle] = React.useState(currentPost.title);
   const [category, setCategory] = React.useState('React');
 
-  console.log(params);
-  console.log(category);
   const handleRadioChange = (event) => {
     setCategory(event.target.value);
   };

@@ -15,4 +15,5 @@ const Permit = ({ children }) => {
 Permit.propTypes = {
   children: PropTypes.element.isRequired,
 };
+
 export default Permit;

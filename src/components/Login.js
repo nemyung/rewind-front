@@ -132,7 +132,6 @@ const Login = ({ toggle = noop }) => {
       <Button
         variant="contained"
         onClick={toggle}
-        // fullWidth
         startIcon={<DirectionsBoatFilledIcon />}
         sx={{
           maxWidth: '300px',
@@ -159,9 +158,7 @@ const Login = ({ toggle = noop }) => {
           height: '45px',
           margin: '0 auto',
         }}
-      >
-        {/* 카카오로 로그인하기 */}
-      </Button>
+      />
     </Box>
   );
 };

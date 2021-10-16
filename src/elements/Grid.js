@@ -54,7 +54,6 @@ const GridBox = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   box-sizing: border-box;
-  /* max-width: 600px; */
   ${(props) => (props.padding ? `padding : ${props.padding};` : '')}
   ${(props) => (props.margin ? `margin : ${props.margin};` : '')}
   ${(props) => (props.bg ? `background-color : ${props.bg};` : '')}

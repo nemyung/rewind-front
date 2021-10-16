@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -16,7 +17,6 @@ const iconStyle = {
   height: '24px',
 };
 
-/* eslint-disable */
 const PostTitle = ({ id = '' }) => {
   const title = useSelector((state) => state.posts.byId);
   const toDay = title[id].insertDt.split('T')[0];
@@ -48,7 +48,6 @@ const PostTitle = ({ id = '' }) => {
           </p>
         </TableCell>
         <TableCell align="center">{title[id].nickname}</TableCell>
-        {/* <TableCell align="left">{title[id].insertDt}</TableCell> */}
         <TableCell align="center">{toDay}</TableCell>
       </TableRow>
     </>

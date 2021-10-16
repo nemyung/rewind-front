@@ -13,11 +13,11 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
 
 import MarkDownViewer from '../components/MarkDownViewer';
-
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 
 import { Grid } from '../elements';
+
 import {
   deletePostToAxios,
   loadCurrentPostToAxios,

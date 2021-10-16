@@ -25,7 +25,6 @@ export default function useSignUp(after) {
       const response = await axios.post(`${serverURI}/signup`, body);
       const { data } = response;
       const { result, errorMessage = '' } = data;
-      console.log(data);
 
       setLoading(false);
       if (result === SUCCESS) {

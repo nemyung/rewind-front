@@ -1,11 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-
-import isEqaul from 'lodash/isEqual';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { styled } from '@mui/material/styles';
+import isEqaul from 'lodash/isEqual';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,13 +10,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
-
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import PostTitle from '../components/PostTitle';
-import { Grid } from '../elements';
 
 import Paging from '../components/PageNation';
+import PostTitle from '../components/PostTitle';
+import { Grid } from '../elements';
 
 import { loadPostsToAxios } from '../features/posts/actions';
 

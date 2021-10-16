@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import { LOGIN, LOG_OUT, AUTHORIZED } from './types';
-// import { removeToken } from '../../utils/auth';
 
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 

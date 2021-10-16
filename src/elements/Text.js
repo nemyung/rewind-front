@@ -1,7 +1,6 @@
+/* eslint-disable */
 import React from 'react';
 import styled from 'styled-components';
-
-/* eslint-disable */
 
 const Text = (props) => {
   const { bold, color, size, children, subject } = props;

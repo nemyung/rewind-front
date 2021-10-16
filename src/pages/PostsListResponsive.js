@@ -63,6 +63,7 @@ const PostsListResponsive = () => {
     }
     dispatch(loadPostsToAxios());
   }, []);
+
   const isMobile = window.matchMedia('(max-width: 425px').matches;
   const is600pxOver = window.matchMedia('(min-width: 600px)').matches;
 

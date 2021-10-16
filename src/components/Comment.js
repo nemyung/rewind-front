@@ -78,7 +78,6 @@ const Comment = ({ id }) => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          // sx={{ mb: 2, fontSize: '12px', my: 1, width: '100%' }}
         >
           <Typography sx={{ fontSize: '12px', color: '#757575' }}>
             {comment.comment}
@@ -149,4 +148,5 @@ const Modifier = styled.input`
     outline: none;
   }
 `;
+
 export default Comment;
