@@ -8,6 +8,7 @@ import PostsListResponsive from '../pages/PostsListResponsive';
 import PostWrite from '../pages/PostWrite';
 import PostEdit from '../pages/PostEdit';
 import PostDetail from '../pages/PostDetail';
+import NotFound from '../pages/NotFound';
 import Permit from './Permit';
 
 import { useUserAuthentication } from '../hooks';
@@ -40,6 +41,9 @@ function App() {
             <Permit>
               <PostEdit />
             </Permit>
+          </Route>
+          <Route>
+            <NotFound />
           </Route>
         </>
       </Switch>
