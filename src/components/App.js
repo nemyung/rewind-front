@@ -7,7 +7,9 @@ import PostsList from '../pages/PostsList';
 import PostsListResponsive from '../pages/PostsListResponsive';
 import PostWrite from '../pages/PostWrite';
 import PostEdit from '../pages/PostEdit';
-import PostDetail from '../pages/PostDetail';
+// import PostDetail from '../pages/PostDetail';
+import PostDetailTest from '../pages/PostDetailTest';
+import NotFound from '../pages/NotFound';
 import Permit from './Permit';
 
 import { useUserAuthentication } from '../hooks';
@@ -23,24 +25,29 @@ function App() {
         </Route>
         <>
           <Header />
-          <Route exact path="/">
-            {isWebView ? <PostsList /> : <PostsListResponsive />}
-          </Route>
-          <Route exact path="/new">
-            <Permit>
-              <PostWrite />
-            </Permit>
-          </Route>
-          <Route exact path="/post/:id">
-            <Permit>
-              <PostDetail />
-            </Permit>
-          </Route>
-          <Route exact path="/post/:id/edit">
-            <Permit>
-              <PostEdit />
-            </Permit>
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              {isWebView ? <PostsList /> : <PostsListResponsive />}
+            </Route>
+            <Route exact path="/new">
+              <Permit>
+                <PostWrite />
+              </Permit>
+            </Route>
+            <Route exact path="/post/:id">
+              <Permit>
+                <PostDetailTest />
+              </Permit>
+            </Route>
+            <Route exact path="/post/:id/edit">
+              <Permit>
+                <PostEdit />
+              </Permit>
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
         </>
       </Switch>
     </>

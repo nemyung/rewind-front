@@ -10,11 +10,18 @@ import '../styles/toastEditor.css';
 
 
 const MarkDownViewer = ({ option, content }) => {
+  const viewerRef = React.useRef(null);
   const viewerOpt = {
-    initialValue: content,
-    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
     ...option,
+    initialValue: content,
+    ref: viewerRef,
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
   };
+
+  React.useEffect(() => {
+    console.log(viewerRef.current.getInstance());
+    viewerRef.current.getInstance().setMarkdown(content);
+  });
 
   return <Viewer {...viewerOpt} />;
 };

@@ -30,9 +30,7 @@ const loginToServer = (email, pw) => async (dispatch) => {
 
     return data;
   } catch (error) {
-    console.log('error');
-    console.log(error);
-    console.log('error');
+    console.error(error);
     throw new Error(error.message);
   }
 };

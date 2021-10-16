@@ -27,8 +27,14 @@ const PostDetail = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id: postId } = useParams();
-
   const currentUserEmail = useSelector((state) => state.user.email);
+
+  // const [testPost, setTestPost] = React.useState({});
+  // const isTestPostLoaded = Boolean(Object.keys(testPost).length);
+  // const testAuthorEmail = testPost?.author;
+  // const testCreatedAt = testPost.insertDt?.split('T')[0];
+  // const isTestCurrentUserPost = currentUserEmail === testAuthorEmail;
+
   const currentPost = useSelector((state) => state.posts.current);
   console.log(currentPost.contents);
   const isCurrentPostLoaded = Boolean(Object.keys(currentPost).length);
@@ -46,9 +52,9 @@ const PostDetail = () => {
     }
   };
   React.useEffect(() => {
-    // if (isCurrentPostLoaded && postId === currentPost.id) {
-    //   return;
-    // }
+    if (isCurrentPostLoaded && postId === currentPost.id) {
+      return;
+    }
     dispatch(loadCurrentPostToAxios(postId));
   }, []);
 
