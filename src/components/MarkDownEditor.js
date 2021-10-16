@@ -62,10 +62,12 @@ const MarkDownEditor = ({
     history.replace(`/post/${currentPost.id}`);
   };
 
+  const isBelowTablet = window.matchMedia('(max-width: 768px)').matches;
+
   const defaultOpt = {
-    previewStyle: 'vertical',
+    previewStyle: isBelowTablet ? "tab" : 'vertical',
     initialEditType: 'markdown',
-    height: '600px',
+    height: isBelowTablet ? '550px' : '600px',
     useCommandShortcut: true,
     previewHighlight: false,
     ref: toastRef,
