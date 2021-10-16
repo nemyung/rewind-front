@@ -61,7 +61,11 @@ const PostsList = () => {
       </TableContainer>
       <Paging />
       <Button
-        sx={{ float: 'right', margin: '10px', fontWeight: 'bold' }}
+        sx={{
+          float: 'right',
+          margin: '10px',
+          fontWeight: 'bold',
+        }}
         variant="contained"
         onClick={() => history.push('/new')}
       >
