@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
 import Header from './Header/Header';
 import Sign from '../pages/Sign';
@@ -18,9 +17,6 @@ function App() {
   const isWebView = window.matchMedia('(min-width: 1200px)').matches;
   return (
     <>
-      <Helmet>
-        <script src="https://developers.kakao.com/sdk/js/kakao.js" />
-      </Helmet>
       <Switch>
         <Route exact path="/sign">
           <Sign />

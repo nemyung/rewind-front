@@ -62,7 +62,7 @@ const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
 export const loadPostsToAxios = (currentPage) => async (dispatch) => {
   try {
-    const pageNumber = currentPage;
+    const pageNumber = currentPage || '0';
     const res = await axios.get(`${baseURL}/posts/${pageNumber}`);
 
     const {

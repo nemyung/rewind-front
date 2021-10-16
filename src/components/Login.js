@@ -45,7 +45,7 @@ const Login = ({ toggle = noop }) => {
     const query = location.search;
     const code = query.split('=')[1];
 
-    async function kakaoTest() {
+    async function handleKaKaoLoginRedirection() {
       try {
         const { data } = await axios({
           method: 'GET',
@@ -58,7 +58,7 @@ const Login = ({ toggle = noop }) => {
         console.error(error);
       }
     }
-    kakaoTest();
+    handleKaKaoLoginRedirection();
   }, []);
 
   return (
@@ -110,8 +110,20 @@ const Login = ({ toggle = noop }) => {
         onClick={toggle}
         fullWidth
         startIcon={<DirectionsBoatFilledIcon />}
+        sx={{ width: '100%', margin: '16px 0 16px 0' }}
       >
         회원가입하기
+      </Button>
+      <Button
+        variant="contained"
+        component="a"
+        fullWidth
+        onClick={() => {
+          window.location.href = `${process.env.REACT_APP_KAKAO_PATH}`;
+        }}
+        sx={{ backgroundColor: '#FFC107!important', color: '#212121' }}
+      >
+        카카오로 로그인하기
       </Button>
       <button
         type="button"

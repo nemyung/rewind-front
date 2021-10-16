@@ -15,14 +15,12 @@ const Paging = () => {
   const dispatch = useDispatch();
 
   const totalPage = useSelector((state) => state.posts.totalPost);
-  const postList = useSelector((state) => state.posts.byId);
   const currentCategory = useSelector((state) => state.posts.category);
-
-  console.log(postList);
 
   const handlePageChange = async (page) => {
     setSelectPage(page);
     const currentPage = page - 1;
+
     if (currentPage === 0) {
       return;
     }
@@ -34,10 +32,8 @@ const Paging = () => {
     const {
       data: { posts },
     } = await axios.get(endpoint);
-    console.log(posts);
 
     const { content, totalElements } = posts;
-
     dispatch(loadPosts(content, totalElements));
   };
   return (
