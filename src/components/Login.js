@@ -23,6 +23,8 @@ import { useInput, useLogin } from '../hooks';
 import { login as loginAction } from '../features/user/actions';
 import { saveToken } from '../utils/auth';
 
+import kakaoLoginSrc from '../assets/kakao-login.png';
+
 const baseURL = process.env.REACT_APP_REMOTE_SERVER_URI;
 
 const Login = ({ toggle = noop }) => {
@@ -62,13 +64,26 @@ const Login = ({ toggle = noop }) => {
   }, []);
 
   return (
-    <Box component="form" autoComplete="off">
+    <Box
+      component="form"
+      autoComplete="off"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <TextField
         type="email"
         value={email}
         onChange={handleEmailChange}
         margin="normal"
         fullWidth
+        sx={{
+          width: '100%',
+          maxWidth: '300px',
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -90,12 +105,21 @@ const Login = ({ toggle = noop }) => {
             </InputAdornment>
           ),
         }}
+        sx={{
+          width: '100%',
+          maxWidth: '300px',
+        }}
       />
       <LoadingButton
         loading={loading}
         variant="outlined"
         onClick={handleFormSubmit}
-        sx={{ width: '100%', margin: '16px 0 8px 0' }}
+        sx={{
+          width: '100%',
+          maxWidth: '300px',
+          height: '45px',
+          margin: '16px 0 4px 0',
+        }}
         startIcon={<LoginIcon />}
       >
         로그인 하기
@@ -108,9 +132,14 @@ const Login = ({ toggle = noop }) => {
       <Button
         variant="contained"
         onClick={toggle}
-        fullWidth
+        // fullWidth
         startIcon={<DirectionsBoatFilledIcon />}
-        sx={{ width: '100%', margin: '16px 0 16px 0' }}
+        sx={{
+          maxWidth: '300px',
+          width: '100%',
+          height: '45px',
+          margin: '8px 0 16px 0',
+        }}
       >
         회원가입하기
       </Button>
@@ -121,9 +150,17 @@ const Login = ({ toggle = noop }) => {
         onClick={() => {
           window.location.href = `${process.env.REACT_APP_KAKAO_PATH}`;
         }}
-        sx={{ backgroundColor: '#FFC107!important', color: '#212121' }}
+        sx={{
+          backgroundColor: '#FFC107!important',
+          color: '#212121',
+          background: `url(${kakaoLoginSrc})`,
+          backgroundSize: 'cover',
+          width: '300px',
+          height: '45px',
+          margin: '0 auto',
+        }}
       >
-        카카오로 로그인하기
+        {/* 카카오로 로그인하기 */}
       </Button>
     </Box>
   );
