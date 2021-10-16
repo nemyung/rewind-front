@@ -13,10 +13,12 @@ import AddIcon from '@mui/icons-material/Add';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 
-import { loadPostsToAxios } from '../features/posts/actions';
+import Paging from '../components/PageNation';
+
 import { ReactComponent as NodeIcon } from '../assets/node.svg';
 import { ReactComponent as ReactIcon } from '../assets/react.svg';
 import { ReactComponent as SpringIcon } from '../assets/spring.svg';
+import { loadPostsToAxios } from '../features/posts/actions';
 
 const StyledTableCell = s(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -112,6 +114,7 @@ const PostsListResponsive = () => {
       >
         <AddIcon sx={{ color: '#fff' }} />
       </IconButton>
+      <Paging />
     </section>
   );
 };

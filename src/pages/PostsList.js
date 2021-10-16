@@ -13,30 +13,26 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
-// import Container from '@mui/material/Container';
+
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import PostTitle from '../components/PostTitle';
 import { Grid } from '../elements';
 
 import Paging from '../components/PageNation';
 
 import { loadPostsToAxios } from '../features/posts/actions';
-import PostTitle from '../components/PostTitle';
 
-/* eslint-disable */
-
-// tableHead: viewport mobile 적용 x
 const PostsList = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  // 반환하는 값이 객체나 배열일 때 isEqaul
-  // 모든 객체 랜더링이 아닌 특정 객체만 랜더링 됨
   const postList = useSelector((state) => state.posts, isEqaul);
 
   React.useEffect(() => {
     if (postList.allIds.length !== 0) {
       return;
     }
+
     dispatch(loadPostsToAxios(String(0)));
   }, []);
 
@@ -87,16 +83,6 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
   },
 }));
 
