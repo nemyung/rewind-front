@@ -24,27 +24,29 @@ function App() {
         </Route>
         <>
           <Header />
-          <Route exact path="/">
-            {isWebView ? <PostsList /> : <PostsListResponsive />}
-          </Route>
-          <Route exact path="/new">
-            <Permit>
-              <PostWrite />
-            </Permit>
-          </Route>
-          <Route exact path="/post/:id">
-            <Permit>
-              <PostDetail />
-            </Permit>
-          </Route>
-          <Route exact path="/post/:id/edit">
-            <Permit>
-              <PostEdit />
-            </Permit>
-          </Route>
-          <Route>
-            <NotFound />
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              {isWebView ? <PostsList /> : <PostsListResponsive />}
+            </Route>
+            <Route exact path="/new">
+              <Permit>
+                <PostWrite />
+              </Permit>
+            </Route>
+            <Route exact path="/post/:id">
+              <Permit>
+                <PostDetail />
+              </Permit>
+            </Route>
+            <Route exact path="/post/:id/edit">
+              <Permit>
+                <PostEdit />
+              </Permit>
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
         </>
       </Switch>
     </>
