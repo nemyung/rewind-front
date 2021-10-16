@@ -158,7 +158,7 @@ const TopNevigation = ({ status }) => {
           <Button
             color="inherit"
             onClick={status ? handleLogout : handleLogin}
-            sx={{ fontSize: '12px' }}
+            sx={{ width: '100px', fontSize: '12px' }}
           >
             {status ? '로그아웃' : '로그인'}
           </Button>

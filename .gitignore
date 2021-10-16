@@ -33,3 +33,8 @@ database.rules.json
 firebase.json
 firebase.indexes.json
 firestore.rules
+### Firebase ### 
+.idea **/node_modules/* **/.firebaserc 
+### Firebase Patch ### 
+.runtimeconfig.json 
+.firebase/

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -44,6 +45,7 @@ const Paging = () => {
       pageRangeDisplayed={5}
       prevPageText="‹"
       nextPageText="›"
+      hideFirstLastPages="false"
       onChange={handlePageChange}
     />
   );
