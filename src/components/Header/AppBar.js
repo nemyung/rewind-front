@@ -14,13 +14,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-// import Button from '@mui/material/Button';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 // import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
+// import LoginIcon from '@mui/icons-material/Login';
+// import LogoutIcon from '@mui/icons-material/Logout';
 
 import { logOut } from '../../features/user/actions';
 import { loadPosts, changeCategory } from '../../features/posts/actions';
@@ -48,7 +48,7 @@ const TopNevigation = ({ status }) => {
   const currentCategory = useSelector((state) => state.posts.category);
 
   const category = ['All', 'React', 'Node', 'Spring'];
-
+  console.log(status);
   const toggle = (open) => (event) => {
     if (
       event &&
@@ -154,12 +154,13 @@ const TopNevigation = ({ status }) => {
               </Typography>
             )}
           </div>
-          <IconButton
+          <Button
             color="inherit"
             onClick={status ? handleLogout : handleLogin}
+            sx={{ fontSize: '12px' }}
           >
-            {status ? <LogoutIcon /> : <LoginIcon />}
-          </IconButton>
+            {status ? '로그아웃' : '로그인'}
+          </Button>
         </Toolbar>
         <SwipeableDrawer
           open={isToggleOpen}

@@ -125,14 +125,6 @@ const Login = ({ toggle = noop }) => {
       >
         카카오로 로그인하기
       </Button>
-      <button
-        type="button"
-        onClick={() =>
-          (window.location.href = `${process.env.REACT_APP_KAKAO_PATH}`)
-        }
-      >
-        하나더
-      </button>
     </Box>
   );
 };
