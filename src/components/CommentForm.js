@@ -17,8 +17,9 @@ const CommentForm = ({ id }) => {
     setComment('');
   };
 
+  const isWeb = window.matchMedia('(min-width: 768px)').matches;
   return (
-    <CommentInputWrapper>
+    <CommentInputWrapper isWeb={isWeb}>
       <CreateIcon />
       <input
         type="text"
@@ -42,7 +43,7 @@ CommentForm.propTypes = {
 };
 
 const CommentInputWrapper = styled.div`
-  width: 80%;
+  width: ${({ isWeb }) => (isWeb ? '80%' : '100%')};
   height: 40px;
   display: flex;
   align-items: center;

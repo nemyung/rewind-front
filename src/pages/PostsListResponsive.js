@@ -63,7 +63,7 @@ const PostsListResponsive = () => {
     }
     dispatch(loadPostsToAxios());
   }, []);
-
+  const isMobile = window.matchMedia('(max-width: 425px').matches;
   const is600pxOver = window.matchMedia('(min-width: 600px)').matches;
 
   return (
@@ -106,8 +106,8 @@ const PostsListResponsive = () => {
           height: '48px',
           borderRadius: '99em',
           backgroundColor: '#303F9F',
-          bottom: '5%',
-          right: '5%',
+          bottom: isMobile ? '10%' : '5%',
+          right: isMobile ? '4%' : '5%',
           boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
         }}
         onClick={() => history.push('/new')}

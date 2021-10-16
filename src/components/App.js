@@ -7,8 +7,7 @@ import PostsList from '../pages/PostsList';
 import PostsListResponsive from '../pages/PostsListResponsive';
 import PostWrite from '../pages/PostWrite';
 import PostEdit from '../pages/PostEdit';
-// import PostDetail from '../pages/PostDetail';
-import PostDetailTest from '../pages/PostDetailTest';
+import PostDetail from '../pages/PostDetail';
 import NotFound from '../pages/NotFound';
 import Permit from './Permit';
 
@@ -16,7 +15,7 @@ import { useUserAuthentication } from '../hooks';
 
 function App() {
   useUserAuthentication();
-  const isWebView = window.matchMedia('(min-width: 1200px)').matches;
+  const isWebView = window.matchMedia('(min-width: 1150px)').matches;
   return (
     <>
       <Switch>
@@ -36,7 +35,7 @@ function App() {
             </Route>
             <Route exact path="/post/:id">
               <Permit>
-                <PostDetailTest />
+                <PostDetail />
               </Permit>
             </Route>
             <Route exact path="/post/:id/edit">

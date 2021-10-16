@@ -19,7 +19,6 @@ const MarkDownViewer = ({ option, content }) => {
   };
 
   React.useEffect(() => {
-    console.log(viewerRef.current.getInstance());
     viewerRef.current.getInstance().setMarkdown(content);
   });
 

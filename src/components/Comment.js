@@ -50,18 +50,27 @@ const Comment = ({ id }) => {
     dispatch(removeCommentToAxios(comment.id));
   };
 
+  const isMobile = window.matchMedia('(max-width: 525px)').matches;
+  const isWeb = window.matchMedia('(min-width: 768px)').matches;
+
   return (
     <Stack
       direction="column"
       spacing={2}
-      sx={{ width: '80%', margin: '0 auto', my: 3 }}
+      sx={{
+        width: isWeb ? '80%' : '100%',
+        margin: '0 auto',
+        my: isWeb ? 2 : 3,
+      }}
     >
       <div style={{ width: '100%' }}>
         <Stack direction="row" alignItems="end">
-          <Typography sx={{ fontSize: '16px', mr: 1 }}>
+          <Typography sx={{ fontSize: isMobile ? '12px' : '16px', mr: 1 }}>
             <b>{comment.nickname}</b>
           </Typography>
-          <Typography sx={{ fontSize: '12px', color: '#BDBDBD' }}>
+          <Typography
+            sx={{ fontSize: isMobile ? '8px' : '12px', color: '#BDBDBD' }}
+          >
             {md}
           </Typography>
         </Stack>
@@ -69,9 +78,11 @@ const Comment = ({ id }) => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mb: 2, fontSize: '12px', my: 1, width: '100%' }}
+          // sx={{ mb: 2, fontSize: '12px', my: 1, width: '100%' }}
         >
-          <Typography sx={{ fontSize: '12px' }}>{comment.comment}</Typography>
+          <Typography sx={{ fontSize: '12px', color: '#757575' }}>
+            {comment.comment}
+          </Typography>
           {isCurrentUserComment && (
             <div>
               <IconButton

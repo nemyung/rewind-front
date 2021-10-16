@@ -30,7 +30,6 @@ const PostDetail = () => {
 
   const currentUserEmail = useSelector((state) => state.user.email);
   const currentPost = useSelector((state) => state.posts.current);
-  console.log(currentPost.contents);
   const isCurrentPostLoaded = Boolean(Object.keys(currentPost).length);
 
   const authorEmail = currentPost?.author;
@@ -45,62 +44,74 @@ const PostDetail = () => {
       console.error(error);
     }
   };
+
   React.useEffect(() => {
-    // if (isCurrentPostLoaded && postId === currentPost.id) {
-    //   return;
-    // }
+    if (isCurrentPostLoaded && postId === currentPost.id) {
+      return;
+    }
     dispatch(loadCurrentPostToAxios(postId));
   }, []);
+
+  const isMobile = window.matchMedia('(max-width: 525px)').matches;
+  const isWeb = window.matchMedia('(min-width: 829px)').matches;
+  const isTablet = window.matchMedia('(min-width: 768px').matches;
 
   if (!isCurrentPostLoaded) {
     return null;
   }
 
   return (
-    <Grid main width="100%" height="100%">
+    <Grid width="100%" height="100%">
       <Container
-        maxWidth="md"
-        sx={{ padding: '60px 20px 20px 20px', width: '80%' }}
+        sx={{
+          padding: isTablet ? '60px 20px 20px 20px' : 0,
+        }}
       >
-        <Card component="article" square>
-          <Grid padding="0px 30px">
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Stack direction="row" alignItems="center">
-                <CardHeader
-                  title={currentPost?.title}
-                  subheader={createdAt}
-                  sx={{ mr: 2 }}
-                />
-                <Typography>{currentPost?.nickname}</Typography>
-              </Stack>
-              {isCurrentUserPost && (
-                <ButtonGroup
-                  variant="text"
-                  aria-label="current user button group"
-                >
-                  <Button onClick={() => history.push(`/post/${postId}/edit`)}>
-                    수정
-                  </Button>
-                  <Button onClick={deletePost}>삭제</Button>
-                </ButtonGroup>
-              )}
+        <Card
+          component="article"
+          square
+          sx={{
+            width: isWeb ? '80%' : '100%',
+            margin: '0 auto',
+            height: isMobile ? '100vh' : 'auto',
+          }}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Stack direction="row" alignItems="center">
+              <CardHeader
+                title={currentPost?.title}
+                subheader={createdAt}
+                sx={{ mr: 1 }}
+              />
+              <Typography>{currentPost?.nickname}</Typography>
             </Stack>
-            <Divider />
-            <CardContent sx={{ minHeight: '300px' }}>
-              <MarkDownViewer content={currentPost?.contents} />
-            </CardContent>
-            <Divider />
-            <CardContent>
-              <Grid>
-                <CommentForm id={postId} />
-                <CommentList />
-              </Grid>
-            </CardContent>
-          </Grid>
+            {isCurrentUserPost && (
+              <ButtonGroup
+                variant="text"
+                aria-label="current user button group"
+              >
+                <Button onClick={() => history.push(`/post/${postId}/edit`)}>
+                  수정
+                </Button>
+                <Button onClick={deletePost}>삭제</Button>
+              </ButtonGroup>
+            )}
+          </Stack>
+          <Divider />
+          <CardContent sx={{ minHeight: isMobile ? '350px' : '300px' }}>
+            <MarkDownViewer content={currentPost?.contents} />
+          </CardContent>
+          <Divider />
+          <CardContent>
+            <Grid>
+              <CommentForm id={postId} />
+              <CommentList />
+            </Grid>
+          </CardContent>
         </Card>
       </Container>
     </Grid>
