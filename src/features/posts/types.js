@@ -1,6 +1,7 @@
 export const CHANGE_CATEGORY = 'posts/CHANGE_CATEGORY';
 export const LOAD_POST_LIST = 'posts/LOAD_POST_LIST';
 export const LOAD_CURRENT_POST = 'posts/LOAD_CURRENT_POST';
+export const CLEAN_UP_CURRENT_POST = 'posts/CLEANUP_CURRENT_POST';
 export const CREATE = 'posts/CREATE';
 export const DELETE = 'posts/DELETE';
 export const UPDATE = 'posts/UPDATE';

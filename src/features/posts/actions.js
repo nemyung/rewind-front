@@ -3,6 +3,7 @@ import {
   CHANGE_CATEGORY,
   LOAD_POST_LIST,
   LOAD_CURRENT_POST,
+  CLEAN_UP_CURRENT_POST,
   CREATE,
   DELETE,
   UPDATE,
@@ -26,6 +27,10 @@ export const loadPosts = (postList, totalElements) => ({
 export const loadCurrentPost = (postId, data) => ({
   type: LOAD_CURRENT_POST,
   payload: { postId, data },
+});
+
+export const cleanupCurrentPost = () => ({
+  type: CLEAN_UP_CURRENT_POST,
 });
 
 export const createPost = (newPost) => ({

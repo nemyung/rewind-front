@@ -7,7 +7,8 @@ import PostsList from '../pages/PostsList';
 import PostsListResponsive from '../pages/PostsListResponsive';
 import PostWrite from '../pages/PostWrite';
 import PostEdit from '../pages/PostEdit';
-import PostDetail from '../pages/PostDetail';
+// import PostDetail from '../pages/PostDetail';
+import PostDetailTest from '../pages/PostDetailTest';
 import NotFound from '../pages/NotFound';
 import Permit from './Permit';
 
@@ -35,7 +36,7 @@ function App() {
             </Route>
             <Route exact path="/post/:id">
               <Permit>
-                <PostDetail />
+                <PostDetailTest />
               </Permit>
             </Route>
             <Route exact path="/post/:id/edit">

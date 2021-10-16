@@ -10,6 +10,7 @@ import {
   LOAD_CURRENT_POST,
   MODIFY_COMMENT,
   REMOVE_COMMENT,
+  CLEAN_UP_CURRENT_POST,
 } from './types';
 
 const initialState = {
@@ -42,6 +43,10 @@ export default function postsReducer(state = initialState, action) {
         const { postId, data } = action.payload;
         draft.current = data;
         draft.current.id = postId;
+        break;
+      }
+      case CLEAN_UP_CURRENT_POST: {
+        draft.current = {};
         break;
       }
       case CREATE: {

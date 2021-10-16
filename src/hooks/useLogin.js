@@ -36,7 +36,7 @@ export default function useLogin() {
       return;
     }
 
-    saveToken(data.token);
+    saveToken(data?.token);
     setIsLoading(false);
     history.replace('/');
   }, []);

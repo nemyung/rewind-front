@@ -18,12 +18,12 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-// import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
-// import LoginIcon from '@mui/icons-material/Login';
-// import LogoutIcon from '@mui/icons-material/Logout';
-
 import { logOut } from '../../features/user/actions';
-import { loadPosts, changeCategory } from '../../features/posts/actions';
+import {
+  loadPosts,
+  changeCategory,
+  cleanupCurrentPost,
+} from '../../features/posts/actions';
 import { removeToken } from '../../utils/auth';
 
 import { ReactComponent as SpringIcon } from '../../assets/spring.svg';
@@ -48,7 +48,6 @@ const TopNevigation = ({ status }) => {
   const currentCategory = useSelector((state) => state.posts.category);
 
   const category = ['All', 'React', 'Node', 'Spring'];
-  console.log(status);
   const toggle = (open) => (event) => {
     if (
       event &&
@@ -73,7 +72,6 @@ const TopNevigation = ({ status }) => {
     const {
       data: { posts },
     } = await axios.get(endpoint);
-    console.log(posts);
 
     const { content, totalElements } = posts;
 
@@ -108,6 +106,11 @@ const TopNevigation = ({ status }) => {
     </Box>
   );
 
+  const cleanupBeforeMove = () => {
+    dispatch(cleanupCurrentPost());
+    history.push('/');
+  };
+
   const isMobileView = window.matchMedia('(max-width: 768px)').matches;
 
   return (
@@ -137,15 +140,13 @@ const TopNevigation = ({ status }) => {
             {isMobileView ? (
               <Typography
                 sx={{ cursor: 'pointer' }}
-                onClick={() => history.push('/')}
+                onClick={cleanupBeforeMove}
               >
                 Rewind
               </Typography>
             ) : (
               <Typography
-                onClick={() => {
-                  history.push('/');
-                }}
+                onClick={cleanupBeforeMove}
                 variant="h6"
                 component="div"
                 sx={{ flexGrow: 1, cursor: 'pointer' }}
