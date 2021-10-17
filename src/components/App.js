@@ -11,10 +11,7 @@ import PostDetail from '../pages/PostDetail';
 import NotFound from '../pages/NotFound';
 import Permit from './Permit';
 
-import { useUserAuthentication } from '../hooks';
-
 function App() {
-  useUserAuthentication();
   const isWebView = window.matchMedia('(min-width: 1150px)').matches;
   return (
     <>

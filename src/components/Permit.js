@@ -1,15 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Loading from './Loading';
+import { useUserAuthentication } from '../hooks';
 
 const Permit = ({ children }) => {
-  const LoginEmail = useSelector((state) => state.user.email);
+  const [isUserAuthorized, token] = useUserAuthentication();
 
-  if (LoginEmail) {
-    return <>{children}</>;
+  if (token && !isUserAuthorized) {
+    return <Loading />;
   }
-  return <Redirect to="/sign" />;
+
+  if (!(token || isUserAuthorized)) {
+    return <Redirect to="/sign" />;
+  }
+
+  return children;
 };
 
 Permit.propTypes = {
