@@ -38,4 +38,6 @@ export default function useUserAuthentication() {
 
     authorizeToServer();
   }, []);
+
+  return [isUserAuthorized, token];
 }
