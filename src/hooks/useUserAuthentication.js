@@ -18,7 +18,7 @@ export default function useUserAuthentication() {
       return null;
     }
 
-    async function test() {
+    async function authorizeToServer() {
       try {
         const { data } = await T.GET('/auth');
         if (data.result === 'fail') {
@@ -36,6 +36,6 @@ export default function useUserAuthentication() {
       return null;
     }
 
-    test();
+    authorizeToServer();
   }, []);
 }
